@@ -1,6 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import NavBar from './components/NavBar';
+import { useSelector } from 'react-redux';
 import PrivateRoute from './components/PrivateRoute';
 
 import { Router, Route, Switch } from 'react-router-dom';
@@ -8,19 +7,26 @@ import Profile from './components/Profile';
 import history from './utils/history';
 import ExternalApi from './views/ExternalApi';
 import LandingPage from './components/LandingPage';
-import { toggleDarkMode } from './store/darkMode';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { orange, lightBlue, deepOrange, deepPurple } from '@material-ui/core/colors';
+import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
+import { green, lightBlue } from '@material-ui/core/colors';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
+const useStyles = makeStyles((theme) => ({
+	root: {
+		flexGrow: 1,
+		backgroundColor: '#31373f',
+		height: '100vh',
+		width: '100%'
+	}
+}));
+
 const App = () => {
-	const dispatch = useDispatch();
 	const darkState = useSelector((state) => state.toggleDarkMode.darkThemeEnabled);
 
 	const paletteType = darkState ? 'dark' : 'light';
 
-	const mainPrimaryColor = darkState ? orange[500] : lightBlue[500];
-	const mainSecondaryColor = darkState ? deepOrange[500] : deepPurple[500];
+	const mainPrimaryColor = darkState ? green[700] : lightBlue[500];
+	const mainSecondaryColor = darkState ? green[900] : lightBlue[900];
 
 	const darkTheme = createMuiTheme({
 		palette: {
@@ -34,21 +40,14 @@ const App = () => {
 		}
 	});
 
-	// on change function to handle the toggle of darkmode/lightmode
-	const handleThemeChange = () => {
-		dispatch(toggleDarkMode());
-	};
+	const classes = useStyles();
 
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<CssBaseline />
-			<div className="App">
+			<div className={classes.root}>
 				{/* Don't forget to include the history module */}
 				<Router history={history}>
-					<header>
-						<NavBar />
-						<button onClick={handleThemeChange}>Click me</button>
-					</header>
 					<Switch>
 						<Route path="/" exact component={LandingPage} />
 						<PrivateRoute path="/profile" component={Profile} />
