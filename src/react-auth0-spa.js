@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 import createAuth0Client from '@auth0/auth0-spa-js';
 import baseUrl from './config/config';
 
