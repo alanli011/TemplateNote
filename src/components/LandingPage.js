@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	home__navbar: {
 		width: '100%',
-		height: '10vh',
+		height: '8.5vh',
 		display: 'flex',
 		justifyContent: 'space-between',
 		alignItems: 'center'

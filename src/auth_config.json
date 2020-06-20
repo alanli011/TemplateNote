@@ -1,5 +1,6 @@
 {
 	"domain": "template-note.us.auth0.com",
 	"clientId": "sCGufuyTJzqbAe2VNm8LtVRI32G0jEE7",
-	"audience": "https://template-note-api"
+	"audience": "https://template-note-api",
+	"redirect_uri": "http://localhost:3000/home"
 }
