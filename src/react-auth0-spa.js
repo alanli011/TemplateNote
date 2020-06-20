@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 import createAuth0Client from '@auth0/auth0-spa-js';
 import baseUrl from './config/config';
 
@@ -30,15 +31,19 @@ export const Auth0Provider = ({ children, onRedirectCallback = DEFAULT_REDIRECT_
 			if (isAuthenticated) {
 				const user = await auth0FromHook.getUser();
 				let token = await auth0FromHook.getTokenSilently();
-				const res = await fetch(`${baseUrl.url}/users`, {
+				const res = await axios({
 					method: 'POST',
-					body: JSON.stringify({ username: user.nickname, email: user.email }),
+					url: `${baseUrl.url}/users`,
+					data: {
+						username: user.nickname,
+						email: user.email
+					},
 					headers: {
 						'Content-Type': 'application/json',
 						Authorization: `Bearer ${token}`
 					}
 				});
-				const response = await res.json();
+				const response = await res.data;
 				if (response) {
 					setUser({ ...user, userId: response.userId });
 				} else {
