@@ -26,7 +26,7 @@ const App = () => {
 	const paletteType = darkState ? 'dark' : 'light';
 
 	const mainPrimaryColor = darkState ? green[700] : lightBlue[500];
-	const mainSecondaryColor = darkState ? green[900] : lightBlue[900];
+	const mainSecondaryColor = darkState ? lightBlue[900] : green[900];
 
 	const darkTheme = createMuiTheme({
 		palette: {
