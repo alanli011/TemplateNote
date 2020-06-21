@@ -8,6 +8,7 @@ import history from './utils/history';
 import ExternalApi from './views/ExternalApi';
 import LandingPage from './components/LandingPage';
 import Home from './components/Home';
+import Notebooks from './components/Notebooks';
 import NavBar from './components/NavBar';
 import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import { green, lightBlue } from '@material-ui/core/colors';
@@ -16,7 +17,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
-		backgroundColor: '#31373f',
+		// backgroundColor: '#31373f',
 		height: '100vh',
 		width: '100%'
 	}
@@ -41,6 +42,7 @@ const App = () => {
 			}
 		}
 	});
+	console.log(darkTheme);
 
 	const classes = useStyles();
 
@@ -54,6 +56,7 @@ const App = () => {
 					<Switch>
 						<Route path="/" exact component={LandingPage} />
 						<PrivateRoute path="/home" exact component={Home} />
+						<PrivateRoute path="/notebooks" exact component={Notebooks} />
 						<PrivateRoute path="/profile" component={Profile} />
 						<PrivateRoute path="/external-api" component={ExternalApi} />
 					</Switch>
