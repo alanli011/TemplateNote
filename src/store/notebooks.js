@@ -13,10 +13,13 @@ export const getNoteBooksActionCreator = (notebooks) => {
 };
 
 export const getNoteBooks = (userId) => async (dispatch) => {
-	const res = await axios({
-		url: `${baseUrl.url}/users/${userId}/notebooks`
-	});
-	dispatch(getNoteBooksActionCreator(res));
+	try {
+		const res = await axios(`${baseUrl.url}/users/${userId}/notebooks`);
+		console.log(res);
+		dispatch(getNoteBooksActionCreator(res));
+	} catch (error) {
+		console.error(error);
+	}
 };
 
 // reducer

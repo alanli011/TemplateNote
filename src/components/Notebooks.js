@@ -5,7 +5,7 @@ import { getNoteBooks } from '../store/notebooks';
 function Notebooks(props) {
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.authentication.currentUser);
-	const notebooks = useSelector((state) => state.notebooks.notebooks);
+	// const notebooks = useSelector((state) => state.notebooks.notebooks);
 
 	useEffect(
 		() => {

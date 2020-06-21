@@ -13,13 +13,14 @@ function Home(props) {
 		() => {
 			dispatch(getUser(user));
 		},
-		[ user, dispatch ]
+		// eslint-disable-next-line
+		[ user ]
 	);
 
 	return (
 		<div>
 			<h1>Welcome home</h1>
-			{isAuthenticated && currentUser && <Notebooks />}
+			{isAuthenticated && <Notebooks />}
 		</div>
 	);
 }

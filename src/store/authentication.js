@@ -11,7 +11,7 @@ export const getUser = (user) => (dispatch) => {
 	dispatch(setUser(user));
 };
 
-export default function reducer(state = { currentUser: {} }, action) {
+export default function reducer(state = {}, action) {
 	switch (action.type) {
 		case SET_USER:
 			return {
