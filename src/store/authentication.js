@@ -16,7 +16,7 @@ export default function reducer(state = { currentUser: {} }, action) {
 		case SET_USER:
 			return {
 				...state,
-				currentUser: state.currentUser
+				currentUser: action.currentUser
 			};
 		default:
 			return state;
