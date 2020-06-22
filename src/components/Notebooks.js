@@ -143,17 +143,17 @@ const Notebooks = (props) => {
 		setNotebookName(e.target.value);
 	};
 
-	const createNotebookHandler = (e) => {
+	const createNotebookHandler = async (e) => {
 		e.preventDefault();
 		try {
 			if (currentUser && token) {
-				dispatch(createNotebook(currentUser.userId, notebookName, token));
+				await dispatch(createNotebook(currentUser.userId, notebookName, token));
 			}
 		} catch (error) {
 			console.error(error);
 		} finally {
-			handleClose();
-			window.location.reload();
+			await handleClose();
+			await window.location.reload();
 		}
 	};
 
@@ -166,14 +166,14 @@ const Notebooks = (props) => {
 		setAnchorEl(null);
 	};
 
-	const deleteNotebookHandler = (e) => {
+	const deleteNotebookHandler = async (e) => {
 		try {
-			dispatch(deleteNotebook(e.target.id, token));
+			await dispatch(deleteNotebook(e.target.id, token));
 		} catch (error) {
 			console.error(error);
 		} finally {
-			handleMenuClose();
-			window.location.reload();
+			await handleMenuClose();
+			await window.location.reload();
 		}
 	};
 
