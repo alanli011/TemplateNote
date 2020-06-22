@@ -5,6 +5,7 @@ import baseUrl from '../config/config';
 export const GET_NOTEBOOKS = 'templatenote/notebooks/GET_NOTEBOOKS';
 export const UPDATE_NOTEBOOK = 'templatenote/notebooks/UPDATE_NOTEBOOK';
 export const GET_NOTEBOOK = 'templatenote/notebooks/GET_NOTEBOOK';
+export const CREATE_NOTEBOOK = 'templatenote/notebooks/CREATE_NOTEBOOK';
 
 // action creators
 export const getNoteBooksActionCreator = (notebooks) => {
@@ -25,6 +26,13 @@ export const updateNoteBookActionCreator = (updateNotebook) => {
 	return {
 		type: UPDATE_NOTEBOOK,
 		updateNotebook
+	};
+};
+
+export const createNoteBookActionCreator = (createNotebook) => {
+	return {
+		type: CREATE_NOTEBOOK,
+		createNotebook
 	};
 };
 
@@ -49,7 +57,7 @@ export const getNoteBook = (userId, notebookId) => async (dispatch) => {
 	}
 };
 
-export const updateNoteBooks = (userId, notebookId) => async (dispatch) => {
+export const updateNoteBook = (userId, notebookId) => async (dispatch) => {
 	try {
 		const res = await axios({
 			method: 'PUT',
@@ -57,6 +65,26 @@ export const updateNoteBooks = (userId, notebookId) => async (dispatch) => {
 			// need to include the data object with the response from a form??
 		});
 		dispatch(updateNoteBookActionCreator(res));
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const createNotebook = (userId, name, token) => async (dispatch) => {
+	try {
+		const res = await axios({
+			method: 'POST',
+			url: `${baseUrl.url}/users/${userId}/notebooks`,
+			data: {
+				name,
+				userId
+			},
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`
+			}
+		});
+		dispatch(createNoteBookActionCreator(res));
 	} catch (error) {
 		console.error(error);
 	}
@@ -74,6 +102,11 @@ export default function reducer(state = { notebooks: {} }, action) {
 			return {
 				...state,
 				notebook: action.notebook
+			};
+		case CREATE_NOTEBOOK:
+			return {
+				...state,
+				createNotebook: action.createNotebook
 			};
 		default:
 			return state;

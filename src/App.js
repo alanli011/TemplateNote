@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import PrivateRoute from './components/PrivateRoute';
-
 import { Router, Route, Switch } from 'react-router-dom';
 import Profile from './components/Profile';
 import history from './utils/history';
@@ -10,6 +9,7 @@ import LandingPage from './components/LandingPage';
 import Home from './components/Home';
 import Notebooks from './components/Notebooks';
 import NavBar from './components/NavBar';
+
 import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import { green, lightBlue } from '@material-ui/core/colors';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 const App = () => {
 	const darkState = useSelector((state) => state.toggleDarkMode.darkThemeEnabled);
+	const notebooks = useSelector((state) => state.notebooks.notebooks);
 
 	const paletteType = darkState ? 'dark' : 'light';
 
@@ -57,6 +58,7 @@ const App = () => {
 						<Route path="/" exact component={LandingPage} />
 						<PrivateRoute path="/home" exact component={Home} />
 						<PrivateRoute path="/notebooks" exact component={Notebooks} />
+						<PrivateRoute path={`/notebooks/${notebooks.id}/notes/:notes_id`} exact />
 						<PrivateRoute path="/profile" component={Profile} />
 						<PrivateRoute path="/external-api" component={ExternalApi} />
 					</Switch>
