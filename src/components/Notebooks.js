@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getNoteBooks } from '../store/notebooks';
 import { useAuth0 } from '../react-auth0-spa';
 import { setUser, setToken } from '../store/authentication';
-import { createNotebook } from '../store/notebooks';
+import { createNotebook, updateNoteBook, deleteNotebook } from '../store/notebooks';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {
@@ -23,7 +23,9 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogContentText,
-	DialogTitle
+	DialogTitle,
+	Menu,
+	MenuItem
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
@@ -80,20 +82,26 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const Notebooks = (props) => {
+	// React useState variables are declared here
 	const [ notebookName, setNotebookName ] = useState('');
 	const [ open, setOpen ] = React.useState(false);
+	const [ anchorEl, setAnchorEl ] = useState(null);
 
+	// using Auth0 variables are deconstructed here
 	const { user, getTokenSilently } = useAuth0();
 
+	// management of redux state is declared here
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.authentication.currentUser);
 	const token = useSelector((state) => state.authentication.token);
 	const notebooks = useSelector((state) => state.notebooks.notebooks);
 
+	// this useEffect will handle the title of the page
 	useEffect(() => {
 		document.title = 'TemplateNote - Notebooks';
 	}, []);
 
+	// this useEffect handles the dispatch of setting the user
 	useEffect(
 		() => {
 			dispatch(setUser(user));
@@ -106,6 +114,7 @@ const Notebooks = (props) => {
 		[ user ]
 	);
 
+	// this useEffect handles the grabbing of all the notebooks associated with currentUser
 	useEffect(
 		() => {
 			if (currentUser) {
@@ -141,6 +150,15 @@ const Notebooks = (props) => {
 			handleClose();
 			window.location.reload();
 		}
+	};
+
+	// the following functions handles the menu click for edit
+	const handleMenuClick = (e) => {
+		setAnchorEl(e.currentTarget);
+	};
+
+	const handleMenuClose = () => {
+		setAnchorEl(null);
 	};
 
 	// instantiate the classes variable to be used with material ui classname
@@ -209,7 +227,22 @@ const Notebooks = (props) => {
 									</StyledTableCell>
 									<StyledTableCell>{currentUser.nickname}</StyledTableCell>
 									<StyledTableCell align="center">
-										<EditIcon color="secondary" />
+										<EditIcon
+											aria-controls="simple-menu"
+											aria-haspopup="true"
+											color="secondary"
+											onClick={handleMenuClick}
+										/>
+										<Menu
+											id="simple-menu"
+											anchorEl={anchorEl}
+											keepMounted
+											open={Boolean(anchorEl)}
+											onClose={handleMenuClose}
+										>
+											<MenuItem onClick={handleMenuClose}>Rename Notebook</MenuItem>
+											<MenuItem onClick={handleMenuClose}>Delete Notebook</MenuItem>
+										</Menu>
 									</StyledTableCell>
 								</StyledTableRow>
 							))}

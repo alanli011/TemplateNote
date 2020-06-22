@@ -6,6 +6,7 @@ export const GET_NOTEBOOKS = 'templatenote/notebooks/GET_NOTEBOOKS';
 export const UPDATE_NOTEBOOK = 'templatenote/notebooks/UPDATE_NOTEBOOK';
 export const GET_NOTEBOOK = 'templatenote/notebooks/GET_NOTEBOOK';
 export const CREATE_NOTEBOOK = 'templatenote/notebooks/CREATE_NOTEBOOK';
+export const DELETE_NOTEBOOK = 'templatenote/notebooks/DELETE_NOTEBOOK';
 
 // action creators
 export const getNoteBooksActionCreator = (notebooks) => {
@@ -36,6 +37,13 @@ export const createNoteBookActionCreator = (createNotebook) => {
 	};
 };
 
+export const deleteNoteBookActionCreator = (deleteNotebook) => {
+	return {
+		type: DELETE_NOTEBOOK,
+		deleteNotebook
+	};
+};
+
 // Dispatch functions
 export const getNoteBooks = (userId) => async (dispatch) => {
 	try {
@@ -57,12 +65,19 @@ export const getNoteBook = (userId, notebookId) => async (dispatch) => {
 	}
 };
 
-export const updateNoteBook = (userId, notebookId) => async (dispatch) => {
+export const updateNoteBook = (userId, notebookId, name, token) => async (dispatch) => {
 	try {
 		const res = await axios({
 			method: 'PUT',
-			url: `${baseUrl.url}/users/${userId}/notebooks/${notebookId}`
-			// need to include the data object with the response from a form??
+			url: `${baseUrl.url}/users/${userId}/notebooks/${notebookId}`,
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`
+			},
+			data: {
+				name,
+				userId
+			}
 		});
 		dispatch(updateNoteBookActionCreator(res));
 	} catch (error) {
@@ -90,6 +105,18 @@ export const createNotebook = (userId, name, token) => async (dispatch) => {
 	}
 };
 
+export const deleteNotebook = (notebookId, token) => async (dispatch) => {
+	const res = await axios({
+		method: 'DELETE',
+		url: `${baseUrl.url}/notebooks/${notebookId}`,
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`
+		}
+	});
+	dispatch(deleteNoteBookActionCreator(res));
+};
+
 // reducer
 export default function reducer(state = { notebooks: {} }, action) {
 	switch (action.type) {
@@ -107,6 +134,11 @@ export default function reducer(state = { notebooks: {} }, action) {
 			return {
 				...state,
 				createNotebook: action.createNotebook
+			};
+		case DELETE_NOTEBOOK:
+			return {
+				...state,
+				deleteNotebook: action.deleteNotebook
 			};
 		default:
 			return state;
