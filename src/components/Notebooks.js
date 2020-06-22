@@ -60,6 +60,11 @@ const useStyles = makeStyles((theme) => ({
 	headSectionRight: {
 		display: 'flex',
 		alignItems: 'center'
+	},
+	menu_edit: {
+		'&:hover': {
+			cursor: 'pointer'
+		}
 	}
 }));
 
@@ -161,6 +166,17 @@ const Notebooks = (props) => {
 		setAnchorEl(null);
 	};
 
+	const deleteNotebookHandler = (e) => {
+		try {
+			dispatch(deleteNotebook(e.target.id, token));
+		} catch (error) {
+			console.error(error);
+		} finally {
+			handleMenuClose();
+			window.location.reload();
+		}
+	};
+
 	// instantiate the classes variable to be used with material ui classname
 	const classes = useStyles();
 
@@ -232,6 +248,7 @@ const Notebooks = (props) => {
 											aria-haspopup="true"
 											color="secondary"
 											onClick={handleMenuClick}
+											className={classes.menu_edit}
 										/>
 										<Menu
 											id="simple-menu"
@@ -240,8 +257,12 @@ const Notebooks = (props) => {
 											open={Boolean(anchorEl)}
 											onClose={handleMenuClose}
 										>
-											<MenuItem onClick={handleMenuClose}>Rename Notebook</MenuItem>
-											<MenuItem onClick={handleMenuClose}>Delete Notebook</MenuItem>
+											<MenuItem id={notebook.id} onClick={handleMenuClose}>
+												Rename Notebook
+											</MenuItem>
+											<MenuItem id={notebook.id} onClick={deleteNotebookHandler}>
+												Delete Notebook
+											</MenuItem>
 										</Menu>
 									</StyledTableCell>
 								</StyledTableRow>
