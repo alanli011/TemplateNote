@@ -1,19 +1,12 @@
 import React from 'react';
+import Navigation from './Navigation';
 
 import { useAuth0 } from '../react-auth0-spa';
 
 const Home = (props) => {
-	const { isAuthenticated, logout } = useAuth0();
+	const { isAuthenticated } = useAuth0();
 
-	return (
-		<div>
-			{isAuthenticated && (
-				<div>
-					<h1>Welcome home</h1>
-				</div>
-			)}
-		</div>
-	);
+	return <div>{isAuthenticated && <Navigation />}</div>;
 };
 
 export default Home;
