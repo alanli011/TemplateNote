@@ -8,7 +8,7 @@ import history from './utils/history';
 import configureStore from './store/configureStore';
 
 const onRedirectCallback = (appState) => {
-	history.push(appState && appState.targetUrl ? appState.targetUrl : window.location.pathname);
+	history.push(appState && appState.targetUrl ? appState.targetUrl : '/home');
 };
 
 const store = configureStore();

@@ -7,13 +7,13 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
-		color: 'white',
+		// color: 'white',
 		width: '100%',
 		height: '100vh'
 	},
 	home__navbar: {
 		width: '100%',
-		height: '10vh',
+		height: '8.5vh',
 		display: 'flex',
 		justifyContent: 'space-between',
 		alignItems: 'center'
@@ -35,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
 function LandingPage(props) {
 	const { isAuthenticated, loginWithRedirect } = useAuth0();
 	const classes = useStyles();
+
+	if (isAuthenticated) {
+		props.history.push('/home');
+	}
 
 	return (
 		<Container className={classes.root}>
