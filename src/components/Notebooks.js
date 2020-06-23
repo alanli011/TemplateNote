@@ -4,9 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getNoteBooks } from '../store/notebooks';
 import { useAuth0 } from '../react-auth0-spa';
 import { setUser, setToken } from '../store/authentication';
-import { createNotebook, updateNoteBook, deleteNotebook } from '../store/notebooks';
-import axios from 'axios';
-import baseUrl from '../config/config';
+import { createNotebook, deleteNotebook } from '../store/notebooks';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {
@@ -91,9 +89,8 @@ const StyledTableRow = withStyles((theme) => ({
 const Notebooks = (props) => {
 	// React useState variables are declared here
 	const [ notebookName, setNotebookName ] = useState('');
-	const [ open, setOpen ] = React.useState(false);
+	const [ open, setOpen ] = useState(false);
 	const [ anchorEl, setAnchorEl ] = useState(null);
-	const [ notebookState, setNotebookState ] = useState(null);
 
 	// using Auth0 variables are deconstructed here
 	const { user, getTokenSilently } = useAuth0();
@@ -102,7 +99,7 @@ const Notebooks = (props) => {
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.authentication.currentUser);
 	const token = useSelector((state) => state.authentication.token);
-	// const notebooks = useSelector((state) => state.notebooks.notebooks);
+	const notebooks = useSelector((state) => state.notebooks);
 
 	// this useEffect will handle the title of the page
 	useEffect(() => {
@@ -133,19 +130,6 @@ const Notebooks = (props) => {
 		[ currentUser ]
 	);
 
-	useEffect(
-		() => {
-			if (currentUser) {
-				const fetchNotebooks = async () => {
-					const res = await axios(`${baseUrl.url}/users/${currentUser.userId}/notebooks`);
-					setNotebookState(res);
-				};
-				fetchNotebooks();
-			}
-		},
-		[ currentUser, notebookState ]
-	);
-
 	// the following functions handles the modal and submission to create a new notebook
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -159,6 +143,7 @@ const Notebooks = (props) => {
 		setNotebookName(e.target.value);
 	};
 
+	// eslint-disable-next-line
 	const createNotebookHandler = () => {
 		if (currentUser && token) {
 			dispatch(createNotebook(currentUser.userId, notebookName, token));
@@ -175,24 +160,12 @@ const Notebooks = (props) => {
 		setAnchorEl(null);
 	};
 
-	const updateNotebookHandler = (e) => {
-		try {
-			dispatch(updateNoteBook(currentUser.userId, e.target.id, notebookName, token));
-		} catch (error) {
-			console.error(error);
-		} finally {
-			handleMenuClose();
-		}
-	};
-
+	// this function handles the deleting of notebooks
 	const deleteNotebookHandler = (e) => {
-		try {
+		if (token) {
 			dispatch(deleteNotebook(e.target.id, token));
-		} catch (error) {
-			console.error(error);
-		} finally {
-			handleMenuClose();
 		}
+		handleMenuClose();
 	};
 
 	// instantiate the classes variable to be used with material ui classname
@@ -251,9 +224,8 @@ const Notebooks = (props) => {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{notebookState &&
-							notebookState.data &&
-							notebookState.data.map((notebook) => (
+						{notebooks &&
+							notebooks.map((notebook) => (
 								<StyledTableRow key={notebook.id} className={classes.hoverStyle}>
 									<StyledTableCell component="th" scope="row">
 										<Link to={`/notebooks/${notebook.id}`} className={classes.linkStyle}>
@@ -276,9 +248,9 @@ const Notebooks = (props) => {
 											open={Boolean(anchorEl)}
 											onClose={handleMenuClose}
 										>
-											<MenuItem id={notebook.id} onClick={updateNotebookHandler}>
+											{/* <MenuItem id={notebook.id} onClick={handleUpdateClickOpen}>
 												Rename Notebook
-											</MenuItem>
+											</MenuItem> */}
 											<MenuItem id={notebook.id} onClick={deleteNotebookHandler}>
 												Delete Notebook
 											</MenuItem>

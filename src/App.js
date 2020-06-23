@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 const App = () => {
 	const darkState = useSelector((state) => state.toggleDarkMode.darkThemeEnabled);
-	const notebooks = useSelector((state) => state.notebooks.notebooks);
+	// const notebooks = useSelector((state) => state.notebooks.notebooks);
 
 	const paletteType = darkState ? 'dark' : 'light';
 
@@ -59,7 +59,7 @@ const App = () => {
 						<Route path="/" exact component={LandingPage} />
 						<PrivateRoute path="/home" exact component={Home} />
 						<PrivateRoute path="/notebooks" exact component={Notebooks} />
-						<PrivateRoute path={`/notebooks/${notebooks.id}/notes/:notes_id`} exact component={Notes} />
+						{/* <PrivateRoute path={`/notebooks/${notebooks.id}/notes/:notes_id`} exact component={Notes} /> */}
 						<PrivateRoute path="/profile" component={Profile} />
 						<PrivateRoute path="/external-api" component={ExternalApi} />
 					</Switch>
