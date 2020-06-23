@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { useAuth0 } from '../react-auth0-spa';
-import { setUser } from '../store/authentication';
+import { setUser, setToken } from '../store/authentication';
 import Mode from './Mode';
 
 import {
@@ -67,13 +67,17 @@ const useStyles = makeStyles((theme) => ({
 	linkStyle: {
 		textDecoration: 'none',
 		color: 'inherit'
+	},
+	avatar: {
+		width: 25,
+		height: 25
 	}
 }));
 
 const Navigation = (props) => {
 	const { window } = props;
 	const [ mobileOpen, setMobileOpen ] = useState(false);
-	const { user, logout } = useAuth0();
+	const { user, getTokenSilently, logout } = useAuth0();
 
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.authentication.currentUser);
@@ -86,9 +90,16 @@ const Navigation = (props) => {
 		setMobileOpen(!mobileOpen);
 	};
 
+	// this useEffect handles the dispatch of setting the user and token
 	useEffect(
 		() => {
-			dispatch(setUser(user));
+			if (user) {
+				dispatch(setUser(user));
+				(async () => {
+					const silentToken = await getTokenSilently();
+					dispatch(setToken(silentToken));
+				})();
+			}
 		},
 		// eslint-disable-next-line
 		[ user ]
@@ -117,7 +128,11 @@ const Navigation = (props) => {
 						</NavLink>
 						<ListItem>
 							<ListItemIcon>
-								<Avatar alt={currentUser.nickname} src={currentUser.picture} />
+								<Avatar
+									alt={currentUser.nickname}
+									src={currentUser.picture}
+									className={classes.avatar}
+								/>
 							</ListItemIcon>
 							<ListItemText>
 								<Typography variant="subtitle1">{currentUser.nickname}</Typography>

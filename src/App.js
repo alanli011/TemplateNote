@@ -68,8 +68,8 @@ const App = () => {
 				{/* Don't forget to include the history module */}
 				<Router history={history}>
 					<Switch>
-						<Route component={AuthenticatedRoutes} />
 						<Route path="/" exact component={LandingPage} />
+						<Route component={AuthenticatedRoutes} />
 					</Switch>
 				</Router>
 			</div>

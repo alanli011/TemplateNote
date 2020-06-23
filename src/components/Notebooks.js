@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getNoteBooks } from '../store/notebooks';
-import { useAuth0 } from '../react-auth0-spa';
-import { setUser, setToken } from '../store/authentication';
 import { createNotebook, deleteNotebook } from '../store/notebooks';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
@@ -93,7 +91,6 @@ const Notebooks = (props) => {
 	const [ anchorEl, setAnchorEl ] = useState(null);
 
 	// using Auth0 variables are deconstructed here
-	const { user, getTokenSilently } = useAuth0();
 
 	// management of redux state is declared here
 	const dispatch = useDispatch();
@@ -105,19 +102,6 @@ const Notebooks = (props) => {
 	useEffect(() => {
 		document.title = 'TemplateNote - Notebooks';
 	}, []);
-
-	// this useEffect handles the dispatch of setting the user
-	useEffect(
-		() => {
-			dispatch(setUser(user));
-			(async () => {
-				const silentToken = await getTokenSilently();
-				dispatch(setToken(silentToken));
-			})();
-		},
-		// eslint-disable-next-line
-		[ user ]
-	);
 
 	// this useEffect handles the grabbing of all the notebooks associated with currentUser
 	useEffect(
