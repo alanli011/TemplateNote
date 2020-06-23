@@ -8,8 +8,9 @@ import ExternalApi from './views/ExternalApi';
 import LandingPage from './components/LandingPage';
 import Home from './components/Home';
 import Notebooks from './components/Notebooks';
-import Notes from './components/Notes';
-import NavBar from './components/NavBar';
+import Navigation from './components/Navigation';
+// import Notes from './components/Notes';
+// import NavBar from './components/NavBar';
 
 import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import { green, lightBlue } from '@material-ui/core/colors';
@@ -54,9 +55,9 @@ const App = () => {
 			<div className={classes.root}>
 				{/* Don't forget to include the history module */}
 				<Router history={history}>
-					<NavBar />
 					<Switch>
 						<Route path="/" exact component={LandingPage} />
+						<Navigation />
 						<PrivateRoute path="/home" exact component={Home} />
 						<PrivateRoute path="/notebooks" exact component={Notebooks} />
 						{/* <PrivateRoute path={`/notebooks/${notebooks.id}/notes/:notes_id`} exact component={Notes} /> */}
