@@ -49,7 +49,7 @@ export const getNoteBooks = (userId) => async (dispatch) => {
 	try {
 		const res = await axios(`${baseUrl.url}/users/${userId}/notebooks`);
 		console.log(res);
-		dispatch(getNoteBooksActionCreator(res));
+		dispatch(getNoteBooksActionCreator(res.data));
 	} catch (error) {
 		console.error(error);
 	}
@@ -75,8 +75,7 @@ export const updateNoteBook = (userId, notebookId, name, token) => async (dispat
 				Authorization: `Bearer ${token}`
 			},
 			data: {
-				name,
-				userId
+				name
 			}
 		});
 		dispatch(updateNoteBookActionCreator(res));
@@ -99,7 +98,7 @@ export const createNotebook = (userId, name, token) => async (dispatch) => {
 				Authorization: `Bearer ${token}`
 			}
 		});
-		dispatch(createNoteBookActionCreator(res));
+		dispatch(createNoteBookActionCreator(res.data));
 	} catch (error) {
 		console.error(error);
 	}
@@ -114,32 +113,28 @@ export const deleteNotebook = (notebookId, token) => async (dispatch) => {
 			Authorization: `Bearer ${token}`
 		}
 	});
-	dispatch(deleteNoteBookActionCreator(res));
+	dispatch(deleteNoteBookActionCreator(res.data));
 };
 
 // reducer
-export default function reducer(state = { notebooks: {} }, action) {
+export default function reducer(state = [], action) {
 	switch (action.type) {
 		case GET_NOTEBOOKS:
-			return {
-				...state,
-				notebooks: action.notebooks
-			};
+			return [ ...action.notebooks ];
 		case GET_NOTEBOOK:
 			return {
 				...state,
 				notebook: action.notebook
 			};
+		case UPDATE_NOTEBOOK:
+			return {
+				...state,
+				updateNotebook: action.updateNoteBook
+			};
 		case CREATE_NOTEBOOK:
-			return {
-				...state,
-				createNotebook: action.createNotebook
-			};
+			return [ ...state, action.createNotebook ];
 		case DELETE_NOTEBOOK:
-			return {
-				...state,
-				deleteNotebook: action.deleteNotebook
-			};
+			return state.filter((notebook) => notebook.id !== action.deleteNotebook.id);
 		default:
 			return state;
 	}
