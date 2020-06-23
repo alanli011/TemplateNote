@@ -27,7 +27,7 @@ export const setToken = (token) => (dispatch) => {
 };
 
 // reducers
-export default function reducer(state = { token: {} }, action) {
+export default function reducer(state = {}, action) {
 	switch (action.type) {
 		case SET_USER:
 			return {
