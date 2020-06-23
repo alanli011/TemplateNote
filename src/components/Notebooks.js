@@ -5,6 +5,8 @@ import { getNoteBooks } from '../store/notebooks';
 import { useAuth0 } from '../react-auth0-spa';
 import { setUser, setToken } from '../store/authentication';
 import { createNotebook, updateNoteBook, deleteNotebook } from '../store/notebooks';
+// import axios from 'axios';
+// import { baseUrl } from '../config/config';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {
@@ -143,18 +145,12 @@ const Notebooks = (props) => {
 		setNotebookName(e.target.value);
 	};
 
-	const createNotebookHandler = async (e) => {
-		e.preventDefault();
-		try {
-			if (currentUser && token) {
-				await dispatch(createNotebook(currentUser.userId, notebookName, token));
-			}
-		} catch (error) {
-			console.error(error);
-		} finally {
-			await handleClose();
-			await window.location.reload();
+	const createNotebookHandler = async () => {
+		if (currentUser && token) {
+			await dispatch(createNotebook(currentUser.userId, notebookName, token));
 		}
+		await handleClose();
+		await window.location.reload();
 	};
 
 	// the following functions handles the menu click for edit
@@ -166,6 +162,17 @@ const Notebooks = (props) => {
 		setAnchorEl(null);
 	};
 
+	const updateNotebookHandler = async (e) => {
+		try {
+			await dispatch(updateNoteBook(currentUser.userId, e.target.id, notebookName, token));
+		} catch (error) {
+			console.error(error);
+		} finally {
+			await handleMenuClose();
+			await window.location.reload();
+		}
+	};
+
 	const deleteNotebookHandler = async (e) => {
 		try {
 			await dispatch(deleteNotebook(e.target.id, token));
@@ -173,6 +180,7 @@ const Notebooks = (props) => {
 			console.error(error);
 		} finally {
 			await handleMenuClose();
+			// might need to change the state
 			await window.location.reload();
 		}
 	};
@@ -257,7 +265,7 @@ const Notebooks = (props) => {
 											open={Boolean(anchorEl)}
 											onClose={handleMenuClose}
 										>
-											<MenuItem id={notebook.id} onClick={handleMenuClose}>
+											<MenuItem id={notebook.id} onClick={updateNotebookHandler}>
 												Rename Notebook
 											</MenuItem>
 											<MenuItem id={notebook.id} onClick={deleteNotebookHandler}>
