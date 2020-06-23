@@ -30,7 +30,7 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		display: 'flex'
+		flexGrow: 1
 	},
 	drawer: {
 		[theme.breakpoints.up('sm')]: {
@@ -103,7 +103,7 @@ const Navigation = (props) => {
 
 	// this will return the entire side navigation
 	const drawer = (
-		<div>
+		<React.Fragment>
 			{currentUser && (
 				<React.Fragment>
 					<List>
@@ -115,7 +115,7 @@ const Navigation = (props) => {
 								</ListItemText>
 							</ListItem>
 						</NavLink>
-						<ListItem button>
+						<ListItem>
 							<ListItemIcon>
 								<Avatar alt={currentUser.nickname} src={currentUser.picture} />
 							</ListItemIcon>
@@ -144,7 +144,7 @@ const Navigation = (props) => {
 								<Typography variant="subtitle1">Templates</Typography>
 							</ListItemText>
 						</ListItem>
-						<ListItem button>
+						<ListItem>
 							<Mode />
 						</ListItem>
 						<ListItem button onClick={handleLogout}>
@@ -158,13 +158,13 @@ const Navigation = (props) => {
 					</List>
 				</React.Fragment>
 			)}
-		</div>
+		</React.Fragment>
 	);
 
 	const container = window !== undefined ? () => window().document.body : undefined;
 
 	return (
-		<div className={classes.root}>
+		<React.Fragment>
 			<AppBar position="fixed" className={classes.appBar}>
 				<IconButton
 					color="inherit"
@@ -210,7 +210,7 @@ const Navigation = (props) => {
 					</Drawer>
 				</Hidden>
 			</nav>
-		</div>
+		</React.Fragment>
 	);
 };
 

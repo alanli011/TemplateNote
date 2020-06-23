@@ -2,9 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import PrivateRoute from './components/PrivateRoute';
 import { Router, Route, Switch } from 'react-router-dom';
-import Profile from './components/Profile';
 import history from './utils/history';
-import ExternalApi from './views/ExternalApi';
 import LandingPage from './components/LandingPage';
 import Home from './components/Home';
 import Notebooks from './components/Notebooks';
@@ -19,6 +17,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
+		display: 'flex',
 		// backgroundColor: '#31373f',
 		height: '100vh',
 		width: '100%'
@@ -47,6 +46,19 @@ const App = () => {
 	});
 	console.log(darkTheme);
 
+	const AuthenticatedRoutes = () => {
+		return (
+			<React.Fragment>
+				<Navigation />
+				<Switch>
+					<PrivateRoute path="/home" exact component={Home} />
+					<PrivateRoute path="/notebooks" exact component={Notebooks} />
+					{/* <PrivateRoute path={`/notebooks/${notebooks.id}/notes/:notes_id`} exact component={Notes} /> */}
+				</Switch>
+			</React.Fragment>
+		);
+	};
+
 	const classes = useStyles();
 
 	return (
@@ -56,13 +68,8 @@ const App = () => {
 				{/* Don't forget to include the history module */}
 				<Router history={history}>
 					<Switch>
+						<Route component={AuthenticatedRoutes} />
 						<Route path="/" exact component={LandingPage} />
-						<Navigation />
-						<PrivateRoute path="/home" exact component={Home} />
-						<PrivateRoute path="/notebooks" exact component={Notebooks} />
-						{/* <PrivateRoute path={`/notebooks/${notebooks.id}/notes/:notes_id`} exact component={Notes} /> */}
-						<PrivateRoute path="/profile" component={Profile} />
-						<PrivateRoute path="/external-api" component={ExternalApi} />
 					</Switch>
 				</Router>
 			</div>
