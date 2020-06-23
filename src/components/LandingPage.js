@@ -36,6 +36,10 @@ function LandingPage(props) {
 	const { isAuthenticated, loginWithRedirect } = useAuth0();
 	const classes = useStyles();
 
+	if (isAuthenticated) {
+		props.history.push('/home');
+	}
+
 	return (
 		<Container className={classes.root}>
 			<nav className={classes.home__navbar}>
