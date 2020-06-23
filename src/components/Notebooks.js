@@ -5,8 +5,8 @@ import { getNoteBooks } from '../store/notebooks';
 import { useAuth0 } from '../react-auth0-spa';
 import { setUser, setToken } from '../store/authentication';
 import { createNotebook, updateNoteBook, deleteNotebook } from '../store/notebooks';
-// import axios from 'axios';
-// import { baseUrl } from '../config/config';
+import axios from 'axios';
+import baseUrl from '../config/config';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {
@@ -93,6 +93,7 @@ const Notebooks = (props) => {
 	const [ notebookName, setNotebookName ] = useState('');
 	const [ open, setOpen ] = React.useState(false);
 	const [ anchorEl, setAnchorEl ] = useState(null);
+	const [ notebookState, setNotebookState ] = useState(null);
 
 	// using Auth0 variables are deconstructed here
 	const { user, getTokenSilently } = useAuth0();
@@ -101,7 +102,7 @@ const Notebooks = (props) => {
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.authentication.currentUser);
 	const token = useSelector((state) => state.authentication.token);
-	const notebooks = useSelector((state) => state.notebooks.notebooks);
+	// const notebooks = useSelector((state) => state.notebooks.notebooks);
 
 	// this useEffect will handle the title of the page
 	useEffect(() => {
@@ -132,6 +133,19 @@ const Notebooks = (props) => {
 		[ currentUser ]
 	);
 
+	useEffect(
+		() => {
+			if (currentUser) {
+				const fetchNotebooks = async () => {
+					const res = await axios(`${baseUrl.url}/users/${currentUser.userId}/notebooks`);
+					setNotebookState(res);
+				};
+				fetchNotebooks();
+			}
+		},
+		[ currentUser, notebookState ]
+	);
+
 	// the following functions handles the modal and submission to create a new notebook
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -145,12 +159,11 @@ const Notebooks = (props) => {
 		setNotebookName(e.target.value);
 	};
 
-	const createNotebookHandler = async () => {
+	const createNotebookHandler = () => {
 		if (currentUser && token) {
-			await dispatch(createNotebook(currentUser.userId, notebookName, token));
+			dispatch(createNotebook(currentUser.userId, notebookName, token));
 		}
-		await handleClose();
-		await window.location.reload();
+		handleClose();
 	};
 
 	// the following functions handles the menu click for edit
@@ -162,26 +175,23 @@ const Notebooks = (props) => {
 		setAnchorEl(null);
 	};
 
-	const updateNotebookHandler = async (e) => {
+	const updateNotebookHandler = (e) => {
 		try {
-			await dispatch(updateNoteBook(currentUser.userId, e.target.id, notebookName, token));
+			dispatch(updateNoteBook(currentUser.userId, e.target.id, notebookName, token));
 		} catch (error) {
 			console.error(error);
 		} finally {
-			await handleMenuClose();
-			await window.location.reload();
+			handleMenuClose();
 		}
 	};
 
-	const deleteNotebookHandler = async (e) => {
+	const deleteNotebookHandler = (e) => {
 		try {
-			await dispatch(deleteNotebook(e.target.id, token));
+			dispatch(deleteNotebook(e.target.id, token));
 		} catch (error) {
 			console.error(error);
 		} finally {
-			await handleMenuClose();
-			// might need to change the state
-			await window.location.reload();
+			handleMenuClose();
 		}
 	};
 
@@ -241,8 +251,9 @@ const Notebooks = (props) => {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{notebooks.data &&
-							notebooks.data.map((notebook) => (
+						{notebookState &&
+							notebookState.data &&
+							notebookState.data.map((notebook) => (
 								<StyledTableRow key={notebook.id} className={classes.hoverStyle}>
 									<StyledTableCell component="th" scope="row">
 										<Link to={`/notebooks/${notebook.id}`} className={classes.linkStyle}>
