@@ -3,8 +3,9 @@ import baseUrl from '../config/config';
 
 // types
 export const GET_NOTEBOOKS = 'templatenote/notebooks/GET_NOTEBOOKS';
+export const GET_ONE_NOTEBOOK = 'templatenote/notebooks/GET_ONE_NOTEBOOK';
 export const UPDATE_NOTEBOOK = 'templatenote/notebooks/UPDATE_NOTEBOOK';
-export const GET_NOTEBOOK = 'templatenote/notebooks/GET_NOTEBOOK';
+export const GET_ONE_NOTEBOOK_DATA = 'templatenote/notebooks/GET_ONE_NOTEBOOK_DATA';
 export const CREATE_NOTEBOOK = 'templatenote/notebooks/CREATE_NOTEBOOK';
 export const DELETE_NOTEBOOK = 'templatenote/notebooks/DELETE_NOTEBOOK';
 
@@ -18,8 +19,15 @@ export const getNoteBooksActionCreator = (notebooks) => {
 
 export const getOneNoteBookActionCreator = (notebook) => {
 	return {
-		type: GET_NOTEBOOK,
+		type: GET_ONE_NOTEBOOK,
 		notebook
+	};
+};
+
+export const getOneNoteBookDataActionCreator = (notebookData) => {
+	return {
+		type: GET_ONE_NOTEBOOK_DATA,
+		notebookData
 	};
 };
 
@@ -48,18 +56,26 @@ export const deleteNoteBookActionCreator = (deleteNotebook) => {
 export const getNoteBooks = (userId) => async (dispatch) => {
 	try {
 		const res = await axios(`${baseUrl.url}/users/${userId}/notebooks`);
-		console.log(res);
 		dispatch(getNoteBooksActionCreator(res.data));
 	} catch (error) {
 		console.error(error);
 	}
 };
 
-export const getNoteBook = (userId, notebookId) => async (dispatch) => {
+export const getOneNoteBook = (userId, notebookId) => async (dispatch) => {
 	try {
 		const res = await axios(`${baseUrl.url}/users/${userId}/notebooks/${notebookId}`);
+		dispatch(getOneNoteBookActionCreator(res.data));
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const getNoteBookData = (userId, notebookId) => async (dispatch) => {
+	try {
+		const res = await axios(`${baseUrl.url}/users/${userId}/notebooks/${notebookId}/notes`);
 		console.log('one notebook: ', res);
-		dispatch(getOneNoteBookActionCreator(res));
+		dispatch(getOneNoteBookDataActionCreator(res.data));
 	} catch (error) {
 		console.error(error);
 	}
@@ -121,10 +137,15 @@ export default function reducer(state = [], action) {
 	switch (action.type) {
 		case GET_NOTEBOOKS:
 			return [ ...action.notebooks ];
-		case GET_NOTEBOOK:
+		case GET_ONE_NOTEBOOK:
 			return {
 				...state,
 				notebook: action.notebook
+			};
+		case GET_ONE_NOTEBOOK_DATA:
+			return {
+				...state,
+				notebookNotes: action.notebookData
 			};
 		case UPDATE_NOTEBOOK:
 			return {
