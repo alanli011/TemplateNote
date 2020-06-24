@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getNoteBooks } from '../store/notebooks';
-import { createNotebook, deleteNotebook } from '../store/notebooks';
+import { getNoteBooks, createNotebook, deleteNotebook } from '../../store/notebooks';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {
@@ -209,10 +208,14 @@ const Notebooks = (props) => {
 					</TableHead>
 					<TableBody>
 						{notebooks &&
+							currentUser &&
 							notebooks.map((notebook) => (
 								<StyledTableRow key={notebook.id} className={classes.hoverStyle}>
 									<StyledTableCell component="th" scope="row">
-										<Link to={`/notebooks/${notebook.id}`} className={classes.linkStyle}>
+										<Link
+											to={`users/${currentUser.userId}/notebooks/${notebook.id}/notes`}
+											className={classes.linkStyle}
+										>
 											{notebook.name}
 										</Link>
 									</StyledTableCell>

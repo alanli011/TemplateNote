@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useAuth0 } from '../react-auth0-spa';
+// import { useAuth0 } from '../react-auth0-spa';
 
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Home = (props) => {
-	const { isAuthenticated } = useAuth0();
+	// const { isAuthenticated } = useAuth0();
 	const classes = useStyles();
 
 	return (
