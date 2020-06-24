@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { useAuth0 } from '../react-auth0-spa';
-import { setUser, setToken } from '../store/authentication';
+// import { setUser, setToken } from '../store/authentication';
 import Mode from './Mode';
 
 import {
@@ -57,10 +57,6 @@ const useStyles = makeStyles((theme) => ({
 	drawerPaper: {
 		width: drawerWidth
 	},
-	content: {
-		flexGrow: 1,
-		padding: theme.spacing(3)
-	},
 	red: {
 		color: '#d50000'
 	},
@@ -77,9 +73,9 @@ const useStyles = makeStyles((theme) => ({
 const Navigation = (props) => {
 	const { window } = props;
 	const [ mobileOpen, setMobileOpen ] = useState(false);
-	const { user, getTokenSilently, logout } = useAuth0();
+	const { logout } = useAuth0();
 
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.authentication.currentUser);
 
 	const classes = useStyles();
@@ -89,21 +85,6 @@ const Navigation = (props) => {
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen);
 	};
-
-	// this useEffect handles the dispatch of setting the user and token
-	useEffect(
-		() => {
-			if (user) {
-				dispatch(setUser(user));
-				(async () => {
-					const silentToken = await getTokenSilently();
-					dispatch(setToken(silentToken));
-				})();
-			}
-		},
-		// eslint-disable-next-line
-		[ user ]
-	);
 
 	// uses Auth0's logout feature to return to '/' upon logout
 	const handleLogout = () => {
