@@ -6,9 +6,9 @@ import { Auth0Provider } from './react-auth0-spa';
 import config from './auth_config.json';
 import history from './utils/history';
 import configureStore from './store/configureStore';
-import Amplify from 'aws-amplify';
-import awsExports from './aws-exports';
-Amplify.configure(awsExports);
+// import Amplify from 'aws-amplify';
+// import awsExports from './aws-exports';
+// Amplify.configure(awsExports);
 
 const onRedirectCallback = (appState) => {
 	history.push(appState && appState.targetUrl ? appState.targetUrl : '/home');
