@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill';
+import ReactQuill from 'react-quill';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -15,12 +15,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RichTextEditor = (props) => {
-	const [ value, setValue ] = useState('');
+	const [ value, setValue ] = useState('some string');
 	const classes = useStyles();
-
-	const handleValueChange = (e) => {
-		setValue(e.target.value);
-	};
 
 	const modules = {
 		toolbar: [
@@ -62,7 +58,7 @@ const RichTextEditor = (props) => {
 				<ReactQuill
 					theme="snow"
 					value={value}
-					onChange={handleValueChange}
+					onChange={setValue}
 					formats={formats}
 					modules={modules}
 					className={classes.editor}
