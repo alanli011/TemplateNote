@@ -55,11 +55,16 @@ const SingleNotebook = (props) => {
 
 	return (
 		<div className={classes.root}>
-			{notebook && (
+			{notebookData &&
+			notebook && (
 				<React.Fragment>
 					<Typography variant="h5" className={classes.alignCenter}>
 						{notebook.name}
 					</Typography>
+					<Typography variant="h6" className={classes.alignCenter}>
+						All Notes
+					</Typography>
+					<Typography variant="body1">{`${notebookData.length}`} notes</Typography>
 				</React.Fragment>
 			)}
 			<List className={classes.listStyle}>
