@@ -57,9 +57,8 @@ const Notes = (props) => {
 				<SingleNoteBook />
 			</div>
 			<ReactQuill
-				id={props.id ? props.id : ''}
 				theme="snow"
-				value={value}
+				defaultValue={value}
 				onChange={setValue}
 				className={classes.maxWidth}
 				modules={modules}
@@ -70,7 +69,7 @@ const Notes = (props) => {
 };
 
 Notes.propTypes = {
-	id: PropTypes.string.isRequired
+	id: PropTypes.string
 };
 
 export default Notes;
