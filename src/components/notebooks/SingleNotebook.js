@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getNoteBookData, getOneNoteBook } from '../../store/notebooks';
 
-import { List, ListItem, ListItemText, Typography, ListItemIcon } from '@material-ui/core';
+import { List, ListItem, ListItemText, Typography, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
 const drawerWidth = 300;
 
@@ -18,7 +16,21 @@ const useStyles = makeStyles((theme) => ({
 		width: drawerWidth,
 		height: '100vh',
 		backgroundColor: theme.palette.success.main,
-		borderRight: `1px solid ${theme.palette.text.disabled}`
+		borderRight: `1px solid ${theme.palette.text.disabled}`,
+		paddingTop: theme.spacing(2)
+	},
+	alignCenter: {
+		textAlign: 'center'
+	},
+	listNotes: {
+		height: '7.5vh'
+	},
+	listStyle: {
+		width: '100%'
+	},
+	linkStyle: {
+		textDecoration: 'none',
+		color: 'inherit'
 	}
 }));
 
@@ -30,8 +42,6 @@ const SingleNotebook = (props) => {
 	const { notebooksId } = useParams();
 	const classes = useStyles();
 
-	console.log('notebook data: ', notebookData);
-	console.log('notebook: ', notebook);
 	useEffect(
 		() => {
 			if (currentUser) {
@@ -45,15 +55,30 @@ const SingleNotebook = (props) => {
 
 	return (
 		<div className={classes.root}>
-			{notebook && <Typography variant="h5">{notebook.name}</Typography>}
-
-			<List>
-				{[ 'Inbox', 'Starred', 'Send email', 'Drafts' ].map((text, index) => (
-					<ListItem button key={text}>
-						<ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-						<ListItemText primary={text} />
-					</ListItem>
-				))}
+			{notebook && (
+				<React.Fragment>
+					<Typography variant="h5" className={classes.alignCenter}>
+						{notebook.name}
+					</Typography>
+				</React.Fragment>
+			)}
+			<List className={classes.listStyle}>
+				{notebookData &&
+					currentUser &&
+					notebookData.map((note) => (
+						<Link
+							to={`/users/${currentUser.userId}/notebooks/${notebooksId}/notes/${note.id}`}
+							className={classes.linkStyle}
+							key={note.id}
+						>
+							<ListItem button className={classes.listNotes}>
+								<ListItemText>
+									<Typography variant="h6">{note.title}</Typography>
+								</ListItemText>
+							</ListItem>
+							<Divider />
+						</Link>
+					))}
 			</List>
 		</div>
 	);

@@ -1,10 +1,14 @@
 import React from 'react';
+import SingleNoteBook from './SingleNotebook';
 
 const Notes = (props) => {
 	return (
-		<div>
+		<React.Fragment>
+			<div>
+				<SingleNoteBook />
+			</div>
 			<h1>My notes</h1>
-		</div>
+		</React.Fragment>
 	);
 };
 
