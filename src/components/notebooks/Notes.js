@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React from 'react';
+import RichTextEditor from '../editor/RichTextEditor';
 import SingleNoteBook from './SingleNotebook';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,9 +7,6 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1
-	},
-	maxWidth: {
-		width: '100%'
 	}
 }));
 
@@ -21,7 +18,7 @@ const Notes = (props) => {
 			<div>
 				<SingleNoteBook />
 			</div>
-			<h1>Single Note</h1>
+			<RichTextEditor />
 		</React.Fragment>
 	);
 };
