@@ -10,7 +10,7 @@ import Navigation from './components/Navigation';
 import SingleNotebook from './components/notebooks/SingleNotebook';
 import { useAuth0 } from './react-auth0-spa';
 import { setUser, setToken } from './store/authentication';
-// import Notes from './components/notebooks/Notes';
+import Notes from './components/notebooks/Notes';
 
 import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import { green, lightBlue, amber, blueGrey } from '@material-ui/core/colors';
@@ -77,11 +77,18 @@ const App = () => {
 					<PrivateRoute path="/home" exact component={Home} />
 					<PrivateRoute path="/notebooks" exact component={Notebooks} />
 					{currentUser && (
-						<PrivateRoute
-							path={`/users/${currentUser.userId}/notebooks/:notebooksId/notes`}
-							exact
-							component={SingleNotebook}
-						/>
+						<React.Fragment>
+							<PrivateRoute
+								path={`/users/${currentUser.userId}/notebooks/:notebooksId/notes`}
+								exact
+								component={SingleNotebook}
+							/>
+							<PrivateRoute
+								path={`/users/${currentUser.userId}/notebooks/:notebooksId/notes/:noteId`}
+								exact
+								component={Notes}
+							/>
+						</React.Fragment>
 					)}
 				</Switch>
 			</React.Fragment>
