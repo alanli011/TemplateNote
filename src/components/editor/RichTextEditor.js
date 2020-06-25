@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill';
+import ReactQuill from 'react-quill';
 
 import { makeStyles } from '@material-ui/core/styles';
 
