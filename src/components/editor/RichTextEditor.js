@@ -51,7 +51,7 @@ const RichTextEditor = (props) => {
 	return (
 		<main className={classes.root}>
 			<div>
-				<h1>Note title</h1>
+				<h1>Single Note</h1>
 			</div>
 			{/* <input type="text" value="" placeholder="Title of your note" /> */}
 			<div>
