@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useAuth0 } from '../react-auth0-spa';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 
 import { Container, Typography, Button, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -39,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
 
 function LandingPage(props) {
 	const { isAuthenticated, loginWithRedirect } = useAuth0();
-	const [ value, setValue ] = useState('');
 	const classes = useStyles();
 
 	if (isAuthenticated) {
@@ -74,9 +71,6 @@ function LandingPage(props) {
 				</Grid>
 				<Grid item xs={6} sm={6} md={6} lg={6}>
 					{/* insert an image of what the app looks like */}
-				</Grid>
-				<Grid item xs={12} sm={12} md={12} lg={12}>
-					<ReactQuill theme="snow" defaultValue={value} onChange={setValue} className={classes.maxWidth} />
 				</Grid>
 			</Grid>
 		</Container>
