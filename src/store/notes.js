@@ -1,15 +1,14 @@
 import axios from 'axios';
 import baseUrl from '../config/config';
-import PrivateRoute from '../components/PrivateRoute';
 
 // types
 export const GET_NOTE = 'templatenote/notebooks/notes/GET_NOTE';
 
 // action creator
-export const getNoteActionCreator = (notes) => {
+export const getNoteActionCreator = (note) => {
 	return {
-		types: GET_NOTE,
-		notes
+		type: GET_NOTE,
+		note
 	};
 };
 
@@ -17,6 +16,7 @@ export const getNoteActionCreator = (notes) => {
 export const getNote = (userId, notebooksId, noteId) => async (dispatch) => {
 	try {
 		const res = await axios(`${baseUrl.url}/users/${userId}/notebooks/${notebooksId}/notes/${noteId}`);
+		console.log(res);
 		dispatch(getNoteActionCreator(res.data));
 	} catch (error) {
 		console.error(error);
@@ -25,7 +25,7 @@ export const getNote = (userId, notebooksId, noteId) => async (dispatch) => {
 
 // reducer
 
-export default function reducer(state = [], action) {
+export default function reducer(state = {}, action) {
 	switch (action.type) {
 		case GET_NOTE:
 			return {
