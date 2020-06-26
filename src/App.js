@@ -105,7 +105,7 @@ const App = () => {
 				<Router history={history}>
 					<Switch>
 						<Route path="/" exact component={LandingPage} />
-						<Route component={AuthenticatedRoutes} />
+						<PrivateRoute exact component={AuthenticatedRoutes} />
 					</Switch>
 				</Router>
 			</div>
