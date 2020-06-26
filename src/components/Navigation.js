@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { useAuth0 } from '../react-auth0-spa';
@@ -99,14 +99,14 @@ const Navigation = (props) => {
 			{currentUser && (
 				<React.Fragment>
 					<List>
-						<NavLink to="/home" className={classes.linkStyle}>
+						<Link to="/home" className={classes.linkStyle}>
 							<ListItem button>
 								<ListItemIcon />
 								<ListItemText>
 									<Typography variant="subtitle1">TemplateNote</Typography>
 								</ListItemText>
 							</ListItem>
-						</NavLink>
+						</Link>
 						<ListItem>
 							<ListItemIcon>
 								<Avatar
@@ -122,7 +122,7 @@ const Navigation = (props) => {
 					</List>
 					<Divider />
 					<List>
-						<NavLink to="/notebooks" className={classes.linkStyle}>
+						<Link to="/notebooks" className={classes.linkStyle}>
 							<ListItem button>
 								<ListItemIcon>
 									<NoteIcon color="primary" />
@@ -131,7 +131,7 @@ const Navigation = (props) => {
 									<Typography variant="subtitle1">Notebooks</Typography>
 								</ListItemText>
 							</ListItem>
-						</NavLink>
+						</Link>
 						<ListItem button>
 							<ListItemIcon>
 								<EventNoteIcon color="secondary" />

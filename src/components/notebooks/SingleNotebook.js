@@ -35,11 +35,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SingleNotebook = (props) => {
+	const { notebooksId } = useParams();
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.authentication.currentUser);
-	const notebookData = useSelector((state) => state.notebooks.notebookNotes);
-	const notebook = useSelector((state) => state.notebooks.notebook);
-	const { notebooksId } = useParams();
+	const notebookData = useSelector((state) => state.currentNotebook);
+	const notebook = useSelector((state) => state.notebook);
 	const classes = useStyles();
 
 	useEffect(
