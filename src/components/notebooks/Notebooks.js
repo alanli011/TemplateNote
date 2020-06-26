@@ -110,7 +110,7 @@ const Notebooks = (props) => {
 			}
 		},
 		// eslint-disable-next-line
-		[ currentUser ]
+		[ currentUser, dispatch ]
 	);
 
 	// the following functions handles the modal and submission to create a new notebook
