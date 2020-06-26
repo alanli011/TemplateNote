@@ -1,5 +1,6 @@
 import axios from 'axios';
 import baseUrl from '../config/config';
+import { DELETE_NOTE } from './notes';
 
 // types
 export const GET_NOTEBOOKS = 'templatenote/notebooks/GET_NOTEBOOKS';
@@ -74,7 +75,6 @@ export const getOneNoteBook = (userId, notebookId) => async (dispatch) => {
 export const getNoteBookData = (userId, notebookId) => async (dispatch) => {
 	try {
 		const res = await axios(`${baseUrl.url}/users/${userId}/notebooks/${notebookId}/notes`);
-		console.log('one notebook: ', res);
 		dispatch(getOneNoteBookDataActionCreator(res.data));
 	} catch (error) {
 		console.error(error);
@@ -133,29 +133,42 @@ export const deleteNotebook = (notebookId, token) => async (dispatch) => {
 };
 
 // reducer
-export default function reducer(state = [], action) {
+export function notebooksReducer(state = [], action) {
 	switch (action.type) {
 		case GET_NOTEBOOKS:
 			return [ ...action.notebooks ];
-		case GET_ONE_NOTEBOOK:
-			return {
-				...state,
-				notebook: action.notebook
-			};
-		case GET_ONE_NOTEBOOK_DATA:
-			return {
-				...state,
-				notebookNotes: action.notebookData
-			};
+		// case GET_ONE_NOTEBOOK:
+		// 	if (state.find((object) => object.id === action.notebook.id)) {
+		// 		return [ ...state ];
+		// 	} else {
+		// 		return [ ...state, action.notebook ];
+		// 	}
 		case UPDATE_NOTEBOOK:
-			return {
-				...state,
-				updateNotebook: action.updateNoteBook
-			};
+			return [ action.updateNoteBook ];
 		case CREATE_NOTEBOOK:
 			return [ ...state, action.createNotebook ];
 		case DELETE_NOTEBOOK:
 			return state.filter((notebook) => notebook.id !== action.deleteNotebook.id);
+		default:
+			return state;
+	}
+}
+
+export function currentNotebookReducer(state = [], action) {
+	switch (action.type) {
+		case GET_ONE_NOTEBOOK_DATA:
+			return [ ...action.notebookData ];
+		case DELETE_NOTE:
+			return state.filter((note) => note.id !== action.deleteNote.id);
+		default:
+			return state;
+	}
+}
+
+export function singleNotebookReducer(state = {}, action) {
+	switch (action.type) {
+		case GET_ONE_NOTEBOOK:
+			return action.notebook;
 		default:
 			return state;
 	}
