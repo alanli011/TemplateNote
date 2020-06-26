@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactQuill from 'react-quill';
-import { getNote, deleteNote } from '../../store/notes';
+import { getNote, deleteNote, updateNote } from '../../store/notes';
 
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import SaveIcon from '@material-ui/icons/Save';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -15,7 +16,11 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: 'column'
 	},
 	editor: {
-		height: '100vh'
+		height: 'inherit',
+		overflow: 'scroll'
+	},
+	maxHeight: {
+		height: '100%'
 	},
 	note__header: {
 		padding: theme.spacing(3, 2),
@@ -26,6 +31,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 	delete: {
 		color: 'red',
+		'&:hover': {
+			cursor: 'pointer'
+		}
+	},
+	hover: {
 		'&:hover': {
 			cursor: 'pointer'
 		}
@@ -41,10 +51,31 @@ const RichTextEditor = (props) => {
 
 	const [ value, setValue ] = useState('');
 
+	useEffect(
+		() => {
+			if (note) {
+				setValue(note.content);
+			}
+		},
+		[ note ]
+	);
+
 	const deleteNoteHandler = () => {
 		if (token) {
 			dispatch(deleteNote(notebooksId, noteId, token));
 			props.history.push(`/users/${currentUser.userId}/notebooks/${notebooksId}/notes`);
+		}
+	};
+
+	const handleQuillChange = (content, delta, source, editor) => {
+		if (note) {
+			setValue(content);
+		}
+	};
+
+	const saveNoteHandler = () => {
+		if (currentUser && note) {
+			dispatch(updateNote(currentUser.userId, notebooksId, noteId, note.title, value, token));
 		}
 	};
 
@@ -89,6 +120,7 @@ const RichTextEditor = (props) => {
 		'image',
 		'video'
 	];
+
 	return (
 		<main className={classes.root}>
 			{note && (
@@ -98,15 +130,16 @@ const RichTextEditor = (props) => {
 							<Typography variant="h4">{note.title}</Typography>
 						</div>
 						<div>
+							<SaveIcon onClick={saveNoteHandler} color="primary" className={classes.hover} />
 							<DeleteForeverIcon onClick={deleteNoteHandler} className={classes.delete} />
 						</div>
 					</div>
 					{/* <input type="text" value="" placeholder="Title of your note" /> */}
-					<div>
+					<div className={classes.maxHeight}>
 						<ReactQuill
 							theme="snow"
-							value={note.content}
-							onChange={setValue}
+							value={value}
+							onChange={handleQuillChange}
 							formats={formats}
 							modules={modules}
 							className={classes.editor}

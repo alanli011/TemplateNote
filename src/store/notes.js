@@ -5,6 +5,7 @@ import baseUrl from '../config/config';
 export const GET_NOTE = 'templatenote/notebooks/notes/GET_NOTE';
 export const DELETE_NOTE = 'templatenote/notebooks/notes/DELETE_NOTE';
 export const CREATE_NOTE = 'templatenote/notebooks/notes/CREATE_NOTE';
+export const UPDATE_NOTE = 'templatenote/notebooks/notes/UPDATE_NOTE';
 
 // action creator
 export const getNoteActionCreator = (note) => {
@@ -25,6 +26,13 @@ export const createNoteActionCreator = (createNote) => {
 	return {
 		type: CREATE_NOTE,
 		createNote
+	};
+};
+
+export const updateNoteActionCreator = (updateNote) => {
+	return {
+		type: UPDATE_NOTE,
+		updateNote
 	};
 };
 
@@ -75,8 +83,29 @@ export const createNote = (notebookId, title, content, token) => async (dispatch
 	}
 };
 
+export const updateNote = (userId, notebookId, noteId, title, content, token) => async (dispatch) => {
+	try {
+		const res = await axios({
+			method: 'PUT',
+			url: `${baseUrl.url}/users/${userId}/notebooks/${notebookId}/notes/${noteId}`,
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`
+			},
+			data: {
+				title,
+				content,
+				notebookId
+			}
+		});
+		dispatch(updateNoteActionCreator(res.data));
+	} catch (error) {
+		console.error(error);
+	}
+};
+
 // reducer
-export default function reducer(state = { deleteNote: [] }, action) {
+export default function reducer(state = { deleteNote: [], updateNote: {} }, action) {
 	switch (action.type) {
 		case GET_NOTE:
 			return {
@@ -87,6 +116,11 @@ export default function reducer(state = { deleteNote: [] }, action) {
 			return { deleteNote: [ ...state.deleteNote.filter((note) => note !== action.deleteNote) ] };
 		case CREATE_NOTE:
 			return [ ...state, action.createNote ];
+		case UPDATE_NOTE:
+			return {
+				...state,
+				updateNote: action.updateNote
+			};
 		default:
 			return state;
 	}
