@@ -1,6 +1,6 @@
 import axios from 'axios';
 import baseUrl from '../config/config';
-import { DELETE_NOTE } from './notes';
+import { DELETE_NOTE, UPDATE_NOTE } from './notes';
 
 // types
 export const GET_NOTEBOOKS = 'templatenote/notebooks/GET_NOTEBOOKS';
@@ -160,6 +160,12 @@ export function currentNotebookReducer(state = [], action) {
 			return [ ...action.notebookData ];
 		case DELETE_NOTE:
 			return state.filter((note) => note.id !== action.deleteNote.id);
+		case UPDATE_NOTE:
+			if (state.find((object) => object.id === action.notebook.id)) {
+				return [ ...state ];
+			} else {
+				return [ ...state, action.updateNote ];
+			}
 		default:
 			return state;
 	}
