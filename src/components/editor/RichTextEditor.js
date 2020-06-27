@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ReactQuill from 'react-quill';
 import { getNote, deleteNote, updateNote } from '../../store/notes';
 
-import { Typography } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import SaveIcon from '@material-ui/icons/Save';
@@ -39,6 +39,12 @@ const useStyles = makeStyles((theme) => ({
 		'&:hover': {
 			cursor: 'pointer'
 		}
+	},
+	input__width: {
+		width: '35vw'
+	},
+	inputStyles: {
+		width: 'inherit'
 	}
 }));
 
@@ -50,21 +56,17 @@ const RichTextEditor = (props) => {
 	const token = useSelector((state) => state.authentication.token);
 
 	const [ value, setValue ] = useState('');
-
-	useEffect(
-		() => {
-			if (note) {
-				setValue(note.content);
-			}
-		},
-		[ note ]
-	);
+	const [ noteTitle, setNoteTitle ] = useState('');
 
 	const deleteNoteHandler = () => {
 		if (token) {
 			dispatch(deleteNote(notebooksId, noteId, token));
 			props.history.push(`/users/${currentUser.userId}/notebooks/${notebooksId}/notes`);
 		}
+	};
+
+	const handleTitleChange = (e) => {
+		setNoteTitle(e.target.value);
 	};
 
 	const handleQuillChange = (content, delta, source, editor) => {
@@ -75,7 +77,7 @@ const RichTextEditor = (props) => {
 
 	const saveNoteHandler = () => {
 		if (currentUser && note) {
-			dispatch(updateNote(currentUser.userId, notebooksId, noteId, note.title, value, token));
+			dispatch(updateNote(currentUser.userId, notebooksId, noteId, noteTitle, value, token));
 		}
 	};
 
@@ -86,6 +88,16 @@ const RichTextEditor = (props) => {
 			}
 		},
 		[ currentUser, dispatch, noteId, notebooksId ]
+	);
+
+	useEffect(
+		() => {
+			if (note) {
+				setValue(note.content);
+				setNoteTitle(note.title);
+			}
+		},
+		[ note ]
 	);
 
 	const classes = useStyles();
@@ -126,8 +138,15 @@ const RichTextEditor = (props) => {
 			{note && (
 				<React.Fragment>
 					<div className={classes.note__header}>
-						<div>
-							<Typography variant="h4">{note.title}</Typography>
+						<div className={classes.input__width}>
+							<TextField
+								value={noteTitle}
+								onChange={handleTitleChange}
+								placeholder="Untitled"
+								fullWidth
+								type="text"
+								className={classes.inputStyles}
+							/>
 						</div>
 						<div>
 							<SaveIcon onClick={saveNoteHandler} color="primary" className={classes.hover} />

@@ -66,7 +66,7 @@ export const createNote = (notebookId, title, content, token) => async (dispatch
 	try {
 		const res = await axios({
 			method: 'POST',
-			url: `${baseUrl.url}/notes`,
+			url: `${baseUrl.url}/notebooks/${notebookId}/notes`,
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`

@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getNoteBookData, getOneNoteBook } from '../../store/notebooks';
+import { createNote } from '../../store/notes';
 
 import { List, ListItem, ListItemText, Typography, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const drawerWidth = 300;
 
@@ -17,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
 		height: '100vh',
 		backgroundColor: theme.palette.success.main,
 		borderRight: `1px solid ${theme.palette.text.disabled}`,
-		paddingTop: theme.spacing(2)
+		paddingTop: theme.spacing(2),
+		overflowY: 'auto'
 	},
 	alignCenter: {
 		textAlign: 'center'
@@ -31,6 +34,14 @@ const useStyles = makeStyles((theme) => ({
 	linkStyle: {
 		textDecoration: 'none',
 		color: 'inherit'
+	},
+	addStyle: {
+		marginTop: theme.spacing(2),
+		width: '40px',
+		height: '40px',
+		'&:hover': {
+			cursor: 'pointer'
+		}
 	}
 }));
 
@@ -38,8 +49,13 @@ const SingleNotebook = (props) => {
 	const { notebooksId } = useParams();
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.authentication.currentUser);
+	const token = useSelector((state) => state.authentication.token);
 	const notebookData = useSelector((state) => state.currentNotebook);
 	const notebook = useSelector((state) => state.notebook);
+
+	const [ title, setTitle ] = useState('');
+	const [ content, setContent ] = useState('');
+
 	const classes = useStyles();
 
 	useEffect(
@@ -52,6 +68,13 @@ const SingleNotebook = (props) => {
 		// eslint-disable-next-line
 		[ currentUser, dispatch ]
 	);
+
+	const handleCreateNote = () => {
+		if (currentUser) {
+			dispatch(createNote(notebooksId, title, content, token));
+			props.history.push(`/users/${currentUser.userId}/notebooks/${notebooksId}/notes`);
+		}
+	};
 
 	return (
 		<div className={classes.root}>
@@ -85,8 +108,9 @@ const SingleNotebook = (props) => {
 						</Link>
 					))}
 			</List>
+			<AddCircleIcon color="secondary" className={classes.addStyle} onClick={handleCreateNote} />
 		</div>
 	);
 };
 
-export default SingleNotebook;
+export default withRouter(SingleNotebook);
