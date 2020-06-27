@@ -161,11 +161,8 @@ export function currentNotebookReducer(state = [], action) {
 		case DELETE_NOTE:
 			return state.filter((note) => note.id !== action.deleteNote.id);
 		case UPDATE_NOTE:
-			if (state.find((note) => note.id === action.updateNote.id)) {
-				return [ ...state ];
-			} else {
-				return [ ...state, action.updateNote ];
-			}
+			const notes = state.filter((note) => note.id !== action.updateNote.id);
+			return [ action.updateNote, ...notes ];
 		default:
 			return state;
 	}
