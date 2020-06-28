@@ -8,9 +8,11 @@ import Home from './components/Home';
 import Notebooks from './components/notebooks/Notebooks';
 import Navigation from './components/Navigation';
 import SingleNotebook from './components/notebooks/SingleNotebook';
+import Notes from './components/notebooks/Notes';
+import Tags from './components/Tags';
+import Template from './components/Templates';
 import { useAuth0 } from './react-auth0-spa';
 import { setUser, setToken } from './store/authentication';
-import Notes from './components/notebooks/Notes';
 
 import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import { green, lightBlue, amber, blueGrey } from '@material-ui/core/colors';
@@ -76,6 +78,9 @@ const App = () => {
 				<Switch>
 					<PrivateRoute path="/home" exact component={Home} />
 					<PrivateRoute path="/notebooks" exact component={Notebooks} />
+					<PrivateRoute path="/tags" exact component={Tags} />
+					<PrivateRoute path="/tags" exact component={Tags} />
+					<PrivateRoute path="/templates" exact component={Template} />
 					{currentUser && (
 						<React.Fragment>
 							<PrivateRoute

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { useAuth0 } from '../react-auth0-spa';
@@ -24,6 +24,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NoteIcon from '@material-ui/icons/Note';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import MenuIcon from '@material-ui/icons/Menu';
+import LoyaltyIcon from '@material-ui/icons/Loyalty';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
@@ -67,6 +68,12 @@ const useStyles = makeStyles((theme) => ({
 	avatar: {
 		width: 25,
 		height: 25
+	},
+	orange: {
+		color: 'orange'
+	},
+	selected: {
+		backgroundColor: '#ffe0b2'
 	}
 }));
 
@@ -99,14 +106,14 @@ const Navigation = (props) => {
 			{currentUser && (
 				<React.Fragment>
 					<List>
-						<Link to="/home" className={classes.linkStyle}>
+						<NavLink to="/home" className={classes.linkStyle}>
 							<ListItem button>
 								<ListItemIcon />
 								<ListItemText>
 									<Typography variant="subtitle1">TemplateNote</Typography>
 								</ListItemText>
 							</ListItem>
-						</Link>
+						</NavLink>
 						<ListItem>
 							<ListItemIcon>
 								<Avatar
@@ -122,7 +129,7 @@ const Navigation = (props) => {
 					</List>
 					<Divider />
 					<List>
-						<Link to="/notebooks" className={classes.linkStyle}>
+						<NavLink exact to="/notebooks" className={classes.linkStyle}>
 							<ListItem button>
 								<ListItemIcon>
 									<NoteIcon color="primary" />
@@ -131,15 +138,27 @@ const Navigation = (props) => {
 									<Typography variant="subtitle1">Notebooks</Typography>
 								</ListItemText>
 							</ListItem>
-						</Link>
-						<ListItem button>
-							<ListItemIcon>
-								<EventNoteIcon color="secondary" />
-							</ListItemIcon>
-							<ListItemText>
-								<Typography variant="subtitle1">Templates</Typography>
-							</ListItemText>
-						</ListItem>
+						</NavLink>
+						<NavLink to="/templates" className={classes.linkStyle}>
+							<ListItem button>
+								<ListItemIcon>
+									<EventNoteIcon color="secondary" />
+								</ListItemIcon>
+								<ListItemText>
+									<Typography variant="subtitle1">Templates</Typography>
+								</ListItemText>
+							</ListItem>
+						</NavLink>
+						<NavLink to="/tags" className={classes.linkStyle}>
+							<ListItem button>
+								<ListItemIcon>
+									<LoyaltyIcon className={classes.orange} />
+								</ListItemIcon>
+								<ListItemText>
+									<Typography variant="subtitle1">Tags</Typography>
+								</ListItemText>
+							</ListItem>
+						</NavLink>
 						<ListItem>
 							<Mode />
 						</ListItem>
