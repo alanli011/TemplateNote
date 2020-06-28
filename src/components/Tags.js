@@ -26,7 +26,7 @@ const Tags = (props) => {
 	);
 
 	return (
-		<Container maxWidth="lg" className={classes.roo}>
+		<Container maxWidth="lg" className={classes.root}>
 			<Typography variant="h2">Tags</Typography>
 			<Grid container spacing={2}>
 				{tags &&

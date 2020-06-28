@@ -16,7 +16,6 @@ export const getTagsActionCreator = (tags) => {
 export const getTags = () => async (dispatch) => {
 	try {
 		const res = await axios(`${baseUrl.url}/tags`);
-		console.log(res);
 		dispatch(getTagsActionCreator(res.data));
 	} catch (error) {
 		console.error(error);
