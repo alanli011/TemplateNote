@@ -5,6 +5,7 @@ import authentication from './authentication';
 import toggleDarkMode from './darkMode';
 import { notebooksReducer, currentNotebookReducer, singleNotebookReducer } from './notebooks';
 import note from './notes';
+import tags from './tags';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -16,7 +17,8 @@ const reducer = combineReducers({
 	notebooks: notebooksReducer,
 	currentNotebook: currentNotebookReducer,
 	notebook: singleNotebookReducer,
-	note
+	note,
+	tags
 });
 
 const configureStore = (initialState) => {

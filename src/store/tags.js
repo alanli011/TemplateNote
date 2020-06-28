@@ -1,4 +1,4 @@
-import axios from 'axious';
+import axios from 'axios';
 import baseUrl from '../config/config';
 
 // types
@@ -16,6 +16,7 @@ export const getTagsActionCreator = (tags) => {
 export const getTags = () => async (dispatch) => {
 	try {
 		const res = await axios(`${baseUrl.url}/tags`);
+		console.log(res);
 		dispatch(getTagsActionCreator(res.data));
 	} catch (error) {
 		console.error(error);
@@ -26,7 +27,7 @@ export const getTags = () => async (dispatch) => {
 export default function reducer(state = [], action) {
 	switch (action.type) {
 		case GET_TAGS:
-			return [ ...action.getTags ];
+			return [ ...action.tags ];
 		default:
 			return state;
 	}
