@@ -10,7 +10,7 @@ import Navigation from './components/Navigation';
 import SingleNotebook from './components/notebooks/SingleNotebook';
 import Notes from './components/notebooks/Notes';
 import Tags from './components/Tags';
-import Template from './components/Templates';
+import Template from './components/templates/Templates';
 import { useAuth0 } from './react-auth0-spa';
 import { setUser, setToken } from './store/authentication';
 
