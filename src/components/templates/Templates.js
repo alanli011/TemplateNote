@@ -60,6 +60,10 @@ const Templates = (props) => {
 		[ currentUser, dispatch ]
 	);
 
+	useEffect(() => {
+		document.title = 'TemplateNote - Templates';
+	}, []);
+
 	const modules = {
 		toolbar: false
 	};

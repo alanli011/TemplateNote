@@ -25,6 +25,10 @@ const Tags = (props) => {
 		[ dispatch ]
 	);
 
+	useEffect(() => {
+		document.title = 'TemplateNote - Tags';
+	}, []);
+
 	return (
 		<Container maxWidth="lg" className={classes.root}>
 			<Typography variant="h2">Tags</Typography>
