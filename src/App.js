@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import PrivateRoute from './components/PrivateRoute';
 import { Router, Route, Switch } from 'react-router-dom';
 import history from './utils/history';
-import LandingPage from './components/LandingPage';
+import LandingPage from './components/landing/LandingPage';
 import Home from './components/Home';
 import Notebooks from './components/notebooks/Notebooks';
 import Navigation from './components/Navigation';
@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
 		display: 'flex',
-		// backgroundColor: '#31373f',
 		height: '100vh',
 		width: '100%'
 	}
@@ -69,7 +68,7 @@ const App = () => {
 			}
 		}
 	});
-	console.log(darkTheme);
+	// console.log(darkTheme);
 
 	const AuthenticatedRoutes = () => {
 		return (

@@ -68,6 +68,14 @@ const SingleNotebook = (props) => {
 		// eslint-disable-next-line
 		[ currentUser, dispatch ]
 	);
+	useEffect(
+		() => {
+			if (notebook) {
+				document.title = `TemplateNote - ${notebook.name}`;
+			}
+		},
+		[ notebook ]
+	);
 
 	const handleCreateNote = () => {
 		if (currentUser) {

@@ -99,7 +99,7 @@ const Notebooks = (props) => {
 
 	// this useEffect will handle the title of the page
 	useEffect(() => {
-		document.title = 'TemplateNote - Notebooks';
+		document.title = 'TemplateNote - My Notebooks';
 	}, []);
 
 	// this useEffect handles the grabbing of all the notebooks associated with currentUser
