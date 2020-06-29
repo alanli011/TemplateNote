@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTemplates } from '../../store/templates';
 import CreateTemplateModal from './CreateTemplateModal';
+import ReactQuill from 'react-quill';
 
 import { Typography, Container, Grid, Card, CardContent, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -42,6 +43,10 @@ const Templates = (props) => {
 		[ currentUser, dispatch ]
 	);
 
+	const modules = {
+		toolbar: false
+	};
+
 	const classes = useStyles();
 	return (
 		<Container maxWidth="lg" className={classes.root} spacing={2}>
@@ -63,7 +68,8 @@ const Templates = (props) => {
 							<Card>
 								<CardContent>
 									<Typography variant="h5">{template.name}</Typography>
-									<Typography variant="body1">{template.content}</Typography>
+									{/* <div dangerouslySetInnerHTML={{ __html: template.content }} /> */}
+									<ReactQuill value={template.content} modules={modules} readOnly={true} />
 								</CardContent>
 							</Card>
 						</Grid>
