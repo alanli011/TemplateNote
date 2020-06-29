@@ -1,13 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import noteImage from '../assets/lightbuild-unsplash.jpg';
 
 import { Typography, Container, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
 	content: {
-		flexGrow: 1,
 		padding: theme.spacing(3),
+		backgroundColor: 'rgba(176,190,197, 1)'
+	},
+	root: {
+		flexGrow: 1,
+		background: `url(${noteImage}) no-repeat center center fixed`,
+		backgroundSize: 'cover',
 		display: 'flex',
 		justifyContent: 'center',
 		flexDirection: 'column',
@@ -24,15 +30,17 @@ const Home = (props) => {
 	const classes = useStyles();
 
 	return (
-		<Container maxWidth="lg" className={classes.content}>
-			<Typography variant="h1">Welcome to TemplateNote</Typography>
-			<Typography variant="body1">Let's start by creating a notebook</Typography>
-			<Link to="/notebooks">
-				<Button variant="contained" color="primary" className={classes.marginTop}>
-					create notebook
-				</Button>
-			</Link>
-		</Container>
+		<main className={classes.root}>
+			<Container maxWidth="lg" className={classes.content}>
+				<Typography variant="h1">Welcome to TemplateNote</Typography>
+				<Typography variant="body1">Let's start by creating a notebook</Typography>
+				<Link to="/notebooks">
+					<Button variant="contained" color="primary" className={classes.marginTop}>
+						create notebook
+					</Button>
+				</Link>
+			</Container>
+		</main>
 	);
 };
 
