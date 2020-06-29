@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
 	content: {
 		padding: theme.spacing(3),
-		backgroundColor: 'rgba(176,190,197, 1)'
+		backgroundColor: 'rgba(176,190,197, 0.9)'
 	},
 	root: {
 		flexGrow: 1,
