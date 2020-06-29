@@ -100,7 +100,7 @@ const Navigation = (props) => {
 	// uses Auth0's logout feature to return to '/' upon logout
 	const handleLogout = () => {
 		logout({
-			returnTo: 'http://localhost:3000'
+			returnTo: 'https://master.dc5skw8rrjv1s.amplifyapp.com'
 		});
 	};
 
