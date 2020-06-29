@@ -114,8 +114,8 @@ export default function reducer(state = { deleteNote: [], updateNote: {} }, acti
 			};
 		case DELETE_NOTE:
 			return { deleteNote: [ ...state.deleteNote.filter((note) => note !== action.deleteNote) ] };
-		case CREATE_NOTE:
-			return [ ...state, action.createNote ];
+		// case CREATE_NOTE:
+		// 	return [ ...state, action.createNote ];
 		case UPDATE_NOTE:
 			return {
 				...state,

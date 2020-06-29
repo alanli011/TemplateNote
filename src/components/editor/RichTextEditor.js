@@ -146,6 +146,8 @@ const RichTextEditor = (props) => {
 								fullWidth
 								type="text"
 								className={classes.inputStyles}
+								variant="outlined"
+								label="Title"
 							/>
 						</div>
 						<div>
