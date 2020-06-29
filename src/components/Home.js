@@ -22,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
 	},
 	marginTop: {
 		marginTop: theme.spacing(2)
+	},
+	linkStyle: {
+		textDecoration: 'none',
+		color: 'inherit'
 	}
 }));
 
@@ -34,7 +38,7 @@ const Home = (props) => {
 			<Container maxWidth="lg" className={classes.content}>
 				<Typography variant="h1">Welcome to TemplateNote</Typography>
 				<Typography variant="body1">Let's start by creating a notebook</Typography>
-				<Link to="/notebooks">
+				<Link to="/notebooks" className={classes.linkStyle}>
 					<Button variant="contained" color="primary" className={classes.marginTop}>
 						create notebook
 					</Button>
