@@ -25,7 +25,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NoteIcon from '@material-ui/icons/Note';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import MenuIcon from '@material-ui/icons/Menu';
-import LoyaltyIcon from '@material-ui/icons/Loyalty';
+// import LoyaltyIcon from '@material-ui/icons/Loyalty';
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -156,7 +156,7 @@ const Navigation = (props) => {
 								</ListItemText>
 							</ListItem>
 						</NavLink>
-						<NavLink to="/tags" className={classes.linkStyle}>
+						{/* <NavLink to="/tags" className={classes.linkStyle}>
 							<ListItem button>
 								<ListItemIcon>
 									<LoyaltyIcon className={classes.orange} />
@@ -165,7 +165,7 @@ const Navigation = (props) => {
 									<Typography variant="subtitle1">Tags</Typography>
 								</ListItemText>
 							</ListItem>
-						</NavLink>
+						</NavLink> */}
 						<ListItem>
 							<Mode />
 						</ListItem>
