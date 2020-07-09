@@ -14,7 +14,7 @@ import Template from './components/templates/Templates';
 import { useAuth0 } from './react-auth0-spa';
 import { setUser, setToken } from './store/authentication';
 
-import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider, createMuiTheme, makeStyles, responsiveFontSizes } from '@material-ui/core/styles';
 import { green, lightBlue, amber, blueGrey } from '@material-ui/core/colors';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -54,7 +54,7 @@ const App = () => {
 	const mainSecondaryColor = darkState ? lightBlue[900] : green[900];
 	const successColor = darkState ? blueGrey[800] : amber[50];
 
-	const darkTheme = createMuiTheme({
+	let darkTheme = createMuiTheme({
 		palette: {
 			type: paletteType,
 			primary: {
@@ -68,6 +68,7 @@ const App = () => {
 			}
 		}
 	});
+	darkTheme = responsiveFontSizes(darkTheme);
 	// console.log(darkTheme);
 
 	const AuthenticatedRoutes = () => {

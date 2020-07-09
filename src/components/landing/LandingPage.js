@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
 		overflowX: 'hidden',
 		overflowY: 'scroll',
 		backgroundColor: '#31373f',
-		color: 'white'
+		color: 'white',
+		paddingBottom: theme.spacing(3)
 	},
 	home__navbar: {
 		width: '100%',
@@ -46,7 +47,8 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'space-around',
-		paddingLeft: theme.spacing(3)
+		paddingLeft: theme.spacing(3),
+		marginBottom: theme.spacing(2)
 	},
 	maxWidth: {
 		width: '100%'
@@ -59,7 +61,8 @@ const useStyles = makeStyles((theme) => ({
 		margin: theme.spacing(3, 0)
 	},
 	alignCenter: {
-		textAlign: 'center'
+		textAlign: 'center',
+		marginTop: theme.spacing(2)
 	}
 }));
 
@@ -87,7 +90,7 @@ function LandingPage(props) {
 					</div>
 				</nav>
 				<Grid container>
-					<Grid item xs={6} sm={6} md={6} lg={6} className={classes.home__section__1__left}>
+					<Grid item xs={12} sm={12} md={6} lg={6} className={classes.home__section__1__left}>
 						<Typography variant="h3">
 							A new way to take notes. Create templates. Reuse templates so you don't need to think about
 							how to style your notes.
@@ -103,7 +106,7 @@ function LandingPage(props) {
 							</Button>
 						)}
 					</Grid>
-					<Grid item xs={6} sm={6} md={6} lg={6}>
+					<Grid item xs={12} sm={12} md={6} lg={6}>
 						<img
 							src={require('../../assets/TemplateNote-Home.png')}
 							alt="Welcome to TemplateNote"
@@ -114,15 +117,15 @@ function LandingPage(props) {
 						<CenterFocusStrongIcon style={{ fontSize: '25em' }} />
 						<Typography variant="h3">Focus on what matters most</Typography>
 					</Grid>
-					<Grid item xs={4} sm={4} md={4} lg={4} className={classes.alignCenter}>
+					<Grid item xs={12} sm={12} md={4} lg={4} className={classes.alignCenter}>
 						<Typography variant="h4">Manage everything from big projects to personal moments.</Typography>
 					</Grid>
-					<Grid item xs={4} sm={4} md={4} lg={4} className={classes.alignCenter}>
+					<Grid item xs={12} sm={12} md={4} lg={4} className={classes.alignCenter}>
 						<Typography variant="h4">
 							Capture ideas and inspiration in notes, voice, and pictures.
 						</Typography>
 					</Grid>
-					<Grid item xs={4} sm={4} md={4} lg={4} className={classes.alignCenter}>
+					<Grid item xs={12} sm={12} md={4} lg={4} className={classes.alignCenter}>
 						<Typography variant="h4">Never lose track of your tasks and deadlines.</Typography>
 					</Grid>
 				</Grid>
