@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import baseUrl from '../config/config';
 
 import { useAuth0 } from '../react-auth0-spa';
 // import { setUser, setToken } from '../store/authentication';
@@ -100,7 +101,7 @@ const Navigation = (props) => {
 	// uses Auth0's logout feature to return to '/' upon logout
 	const handleLogout = () => {
 		logout({
-			returnTo: 'https://master.dc5skw8rrjv1s.amplifyapp.com'
+			returnTo: baseUrl.main
 		});
 	};
 
