@@ -22,8 +22,7 @@ const useStyles = makeStyles((theme) => ({
 		overflowX: 'hidden',
 		overflowY: 'scroll',
 		backgroundColor: '#31373f',
-		color: 'white',
-		paddingBottom: theme.spacing(6)
+		color: 'white'
 	},
 	home__navbar: {
 		width: '100%',
@@ -129,8 +128,8 @@ function LandingPage(props) {
 						<Typography variant="h4">Never lose track of your tasks and deadlines.</Typography>
 					</Grid>
 				</Grid>
+				<Footer />
 			</main>
-			<Footer />
 		</div>
 	);
 }
