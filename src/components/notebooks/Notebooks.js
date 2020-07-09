@@ -37,11 +37,11 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		padding: theme.spacing(3, 0)
 	},
-	hoverStyle: {
-		'&:hover': {
-			backgroundColor: '#8fbac7'
-		}
-	},
+	// hoverStyle: {
+	// 	'&:hover': {
+	// 		backgroundColor: '#8fbac7'
+	// 	}
+	// },
 	linkStyle: {
 		textDecoration: 'none',
 		color: 'inherit',
@@ -210,7 +210,7 @@ const Notebooks = (props) => {
 						{notebooks &&
 							currentUser &&
 							notebooks.map((notebook) => (
-								<StyledTableRow key={notebook.id} className={classes.hoverStyle}>
+								<StyledTableRow key={notebook.id}>
 									<StyledTableCell component="th" scope="row">
 										<Link
 											to={`users/${currentUser.userId}/notebooks/${notebook.id}/notes`}

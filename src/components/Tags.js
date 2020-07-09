@@ -16,7 +16,7 @@ const Tags = (props) => {
 	const dispatch = useDispatch();
 	const classes = useStyles();
 	const tags = useSelector((state) => state.tags);
-	console.log(tags);
+	// console.log(tags);
 
 	useEffect(
 		() => {
