@@ -174,7 +174,7 @@
                 var errorTypes = [{ message: "lower case letters (a-z)" }, { message: "upper case letters (A-Z)" }, { message: "special characters (e.g. !@#$%^&*)" }, { message: "numbers (i.e. 0-9)" }]
                 var errorHTML;
                 if (err.code === "invalid_password") {
-                    errorHTML = '<ul>' + errorRules.map(rule => { return `<li>${rule.message}</li>` }).join('') + errorTypes.map(type => { return `<li>${type.message}</li>` }).join('') + '</ul>'
+                    errorHTML = '<ul>' + errorRules.map(rule => { return `<li>${rule.message}</li>` }).join('') + '<ul>' + errorTypes.map(type => { return `<li>${type.message}</li>` }).join('') + '</ul>' + '</ul>'
                 } else {
                     errorHTML = err.description;
                 }
