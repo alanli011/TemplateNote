@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getTemplates } from '../../store/templates';
 import CreateTemplateModal from './CreateTemplateModal';
 import ReactQuill from 'react-quill';
-// import { deleteTemplate } from '../../store/templates';
+import { deleteTemplate } from '../../store/templates';
 
 import { Typography, Container, Grid, Card, CardContent, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-// import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -26,6 +26,12 @@ const useStyles = makeStyles((theme) => ({
 		'&:hover': {
 			cursor: 'pointer'
 		}
+	},
+	cardHeader: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		paddingBottom: theme.spacing(2)
 	}
 }));
 
@@ -33,7 +39,7 @@ const Templates = (props) => {
 	const dispatch = useDispatch();
 	const templates = useSelector((state) => state.templates);
 	const currentUser = useSelector((state) => state.authentication.currentUser);
-	// const token = useSelector((state) => state.authentication.token);
+	const token = useSelector((state) => state.authentication.token);
 	const [ open, setOpen ] = useState(false);
 
 	const handleClickOpen = () => {
@@ -44,12 +50,11 @@ const Templates = (props) => {
 		setOpen(false);
 	};
 
-	// const handleDeleteTemplate = (e) => {
-	// 	if (token) {
-	// 		dispatch(deleteTemplate(e.target.id, token));
-	// 		console.log(e.target.id);
-	// 	}
-	// };
+	const handleDeleteTemplate = (id) => {
+		if (token) {
+			dispatch(deleteTemplate(id, token));
+		}
+	};
 
 	useEffect(
 		() => {
@@ -85,13 +90,17 @@ const Templates = (props) => {
 			<Grid container spacing={2}>
 				{templates &&
 					templates.map((template) => (
-						<Grid item xs={4} sm={4} md={4} lg={4} key={`template-${template.id}`}>
+						<Grid item xs={12} sm={12} md={6} lg={4} key={`template-${template.id}`}>
 							<Card id={`template-${template.id}`}>
 								<CardContent>
-									<Typography variant="h5">{template.name}</Typography>
-									{/* <div dangerouslySetInnerHTML={{ __html: template.content }} /> */}
+									<div className={classes.cardHeader}>
+										<Typography variant="h5">{template.name}</Typography>
+										<DeleteForeverIcon
+											className={classes.red}
+											onClick={() => handleDeleteTemplate(template.id)}
+										/>
+									</div>
 									<ReactQuill value={template.content} modules={modules} readOnly={true} />
-									{/* <DeleteForeverIcon className={classes.red} onClick={handleDeleteTemplate} /> */}
 								</CardContent>
 							</Card>
 						</Grid>
