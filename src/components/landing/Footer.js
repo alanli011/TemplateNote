@@ -8,7 +8,8 @@ const useStyles = makeStyles((theme) => ({
 	footer: {
 		padding: theme.spacing(3, 2),
 		backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[800],
-		color: 'black'
+		color: 'black',
+		marginTop: theme.spacing(6)
 	},
 	content: {
 		display: 'flex',
