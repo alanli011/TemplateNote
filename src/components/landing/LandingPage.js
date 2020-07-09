@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 		overflowY: 'scroll',
 		backgroundColor: '#31373f',
 		color: 'white',
-		paddingBottom: theme.spacing(3)
+		paddingBottom: theme.spacing(6)
 	},
 	home__navbar: {
 		width: '100%',
