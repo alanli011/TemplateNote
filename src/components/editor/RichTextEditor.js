@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ReactQuill from 'react-quill';
 import { getNote, deleteNote, updateNote } from '../../store/notes';
 
-import { TextField } from '@material-ui/core';
+import { TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import SaveIcon from '@material-ui/icons/Save';
@@ -45,6 +45,13 @@ const useStyles = makeStyles((theme) => ({
 	},
 	inputStyles: {
 		width: 'inherit'
+	},
+	action__section: {
+		display: 'flex',
+		flexDirection: 'row'
+	},
+	margin: {
+		marginRight: theme.spacing(2)
 	}
 }));
 
@@ -150,7 +157,10 @@ const RichTextEditor = (props) => {
 								label="Title"
 							/>
 						</div>
-						<div>
+						<div className={classes.action__section}>
+							<Button variant="outlined" color="secondary" className={classes.margin}>
+								Apply Templates
+							</Button>
 							<SaveIcon onClick={saveNoteHandler} color="primary" className={classes.hover} />
 							<DeleteForeverIcon onClick={deleteNoteHandler} className={classes.delete} />
 						</div>
