@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTemplates } from '../../store/templates';
+import { getTemplates, deleteTemplate } from '../../store/templates';
 import CreateTemplateModal from './CreateTemplateModal';
 import ReactQuill from 'react-quill';
-import { deleteTemplate } from '../../store/templates';
 
 import { Typography, Container, Grid, Card, CardContent, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
