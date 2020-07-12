@@ -179,7 +179,7 @@ const RichTextEditor = (props) => {
 							>
 								Apply Templates
 							</Button>
-							<TemplateButton selectedTemplate={selectedTemplate} open={open} handleClose={handleClose} />
+							<TemplateButton selectedTemplate={selectedTemplate} open={open} onClose={handleClose} />
 							<SaveIcon onClick={saveNoteHandler} color="primary" className={classes.hover} />
 							<DeleteForeverIcon onClick={deleteNoteHandler} className={classes.delete} />
 						</div>
