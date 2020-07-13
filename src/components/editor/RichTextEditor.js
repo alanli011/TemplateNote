@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, withRouter, useRouteMatch } from 'react-router-dom';
+import { useParams, withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactQuill from 'react-quill';
 import { getNote, deleteNote, updateNote } from '../../store/notes';
@@ -59,8 +59,6 @@ const useStyles = makeStyles((theme) => ({
 
 const RichTextEditor = (props) => {
 	const { notebooksId, noteId } = useParams();
-	let match = useRouteMatch();
-	console.log(match);
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.authentication.currentUser);
 	const note = useSelector((state) => state.note.note);
@@ -186,7 +184,7 @@ const RichTextEditor = (props) => {
 							<DeleteForeverIcon onClick={deleteNoteHandler} className={classes.delete} />
 						</div>
 					</div>
-					{selectedTemplate && match.url ? (
+					{selectedTemplate ? (
 						<div className={classes.maxHeight}>
 							<ReactQuill
 								theme="snow"
