@@ -3,8 +3,9 @@ import { useParams, withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactQuill from 'react-quill';
 import { getNote, deleteNote, updateNote } from '../../store/notes';
+import TemplateButton from './TemplateButton';
 
-import { TextField } from '@material-ui/core';
+import { TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import SaveIcon from '@material-ui/icons/Save';
@@ -45,6 +46,14 @@ const useStyles = makeStyles((theme) => ({
 	},
 	inputStyles: {
 		width: 'inherit'
+	},
+	action__section: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center'
+	},
+	margin: {
+		marginRight: theme.spacing(2)
 	}
 }));
 
@@ -55,8 +64,10 @@ const RichTextEditor = (props) => {
 	const note = useSelector((state) => state.note.note);
 	const token = useSelector((state) => state.authentication.token);
 
-	const [ value, setValue ] = useState('');
+	const [ content, setContent ] = useState('');
 	const [ noteTitle, setNoteTitle ] = useState('');
+	const [ open, setOpen ] = useState(false);
+	const [ selectedTemplate, setSelectedTemplate ] = useState(null);
 
 	const deleteNoteHandler = () => {
 		if (token) {
@@ -65,19 +76,28 @@ const RichTextEditor = (props) => {
 		}
 	};
 
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = (value) => {
+		setOpen(false);
+		setSelectedTemplate(value);
+	};
+
 	const handleTitleChange = (e) => {
 		setNoteTitle(e.target.value);
 	};
 
 	const handleQuillChange = (content, delta, source, editor) => {
 		if (note) {
-			setValue(content);
+			setContent(content);
 		}
 	};
 
 	const saveNoteHandler = () => {
 		if (currentUser && note) {
-			dispatch(updateNote(currentUser.userId, notebooksId, noteId, noteTitle, value, token));
+			dispatch(updateNote(currentUser.userId, notebooksId, noteId, noteTitle, content, token));
 		}
 	};
 
@@ -93,7 +113,7 @@ const RichTextEditor = (props) => {
 	useEffect(
 		() => {
 			if (note) {
-				setValue(note.content);
+				setContent(note.content);
 				setNoteTitle(note.title);
 			}
 		},
@@ -150,23 +170,45 @@ const RichTextEditor = (props) => {
 								label="Title"
 							/>
 						</div>
-						<div>
+						<div className={classes.action__section}>
+							<Button
+								variant="outlined"
+								color="secondary"
+								className={classes.margin}
+								onClick={handleClickOpen}
+							>
+								Apply Templates
+							</Button>
+							<TemplateButton selectedTemplate={selectedTemplate} open={open} onClose={handleClose} />
 							<SaveIcon onClick={saveNoteHandler} color="primary" className={classes.hover} />
 							<DeleteForeverIcon onClick={deleteNoteHandler} className={classes.delete} />
 						</div>
 					</div>
-					{/* <input type="text" value="" placeholder="Title of your note" /> */}
-					<div className={classes.maxHeight}>
-						<ReactQuill
-							theme="snow"
-							value={value}
-							onChange={handleQuillChange}
-							formats={formats}
-							modules={modules}
-							className={classes.editor}
-							placeholder="Start typing here..."
-						/>
-					</div>
+					{selectedTemplate ? (
+						<div className={classes.maxHeight}>
+							<ReactQuill
+								theme="snow"
+								value={selectedTemplate}
+								onChange={handleQuillChange}
+								formats={formats}
+								modules={modules}
+								className={classes.editor}
+								placeholder="Start typing here..."
+							/>
+						</div>
+					) : (
+						<div className={classes.maxHeight}>
+							<ReactQuill
+								theme="snow"
+								value={content}
+								onChange={handleQuillChange}
+								formats={formats}
+								modules={modules}
+								className={classes.editor}
+								placeholder="Start typing here..."
+							/>
+						</div>
+					)}
 				</React.Fragment>
 			)}
 		</main>

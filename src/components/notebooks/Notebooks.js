@@ -132,6 +132,7 @@ const Notebooks = (props) => {
 			dispatch(createNotebook(currentUser.userId, notebookName, token));
 		}
 		handleClose();
+		setNotebookName('');
 	};
 
 	// the following functions handles the menu click for edit

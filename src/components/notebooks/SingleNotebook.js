@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getNoteBookData, getOneNoteBook } from '../../store/notebooks';
@@ -53,8 +53,8 @@ const SingleNotebook = (props) => {
 	const notebookData = useSelector((state) => state.currentNotebook);
 	const notebook = useSelector((state) => state.notebook);
 
-	const [ title, setTitle ] = useState('');
-	const [ content, setContent ] = useState('');
+	let title = 'Untitled';
+	let content = '';
 
 	const classes = useStyles();
 
@@ -116,7 +116,7 @@ const SingleNotebook = (props) => {
 						</Link>
 					))}
 			</List>
-			<AddCircleIcon color="secondary" className={classes.addStyle} onClick={handleCreateNote} />
+			<AddCircleIcon color="primary" className={classes.addStyle} onClick={handleCreateNote} />
 		</div>
 	);
 };
