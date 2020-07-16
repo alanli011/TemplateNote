@@ -9,6 +9,14 @@ import { Dialog, Slide, Button } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1
+	},
+	action: {
+		width: '100%',
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'flex-end',
+		padding: theme.spacing(2),
+		marginTop: theme.spacing(2)
 	}
 }));
 
@@ -48,12 +56,14 @@ const CreateTemplateModal = (props) => {
 					handleTitleChange={handleTitleChange}
 					handleQuillChange={handleQuillChange}
 				/>
-				<Button autoFocus variant="contained" color="primary" onClick={handleCreateTemplate}>
-					save
-				</Button>
-				<Button autoFocus color="inherit" onClick={props.handleClose}>
-					Cancel
-				</Button>
+				<div className={classes.action}>
+					<Button autoFocus variant="contained" color="primary" onClick={handleCreateTemplate}>
+						save
+					</Button>
+					<Button autoFocus color="inherit" onClick={props.handleClose}>
+						Cancel
+					</Button>
+				</div>
 			</Dialog>
 		</div>
 	);
