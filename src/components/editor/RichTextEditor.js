@@ -83,6 +83,7 @@ const RichTextEditor = (props) => {
 	const handleClose = (value) => {
 		setOpen(false);
 		setSelectedTemplate(value);
+		setContent(value);
 	};
 
 	const handleTitleChange = (e) => {
@@ -188,7 +189,7 @@ const RichTextEditor = (props) => {
 						<div className={classes.maxHeight}>
 							<ReactQuill
 								theme="snow"
-								value={selectedTemplate}
+								value={content}
 								onChange={handleQuillChange}
 								formats={formats}
 								modules={modules}
