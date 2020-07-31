@@ -65,6 +65,7 @@ const RichTextEditor = (props) => {
 	const token = useSelector((state) => state.authentication.token);
 
 	const [ content, setContent ] = useState('');
+	const [ latestContent, setLatestContent ] = useState('');
 	const [ noteTitle, setNoteTitle ] = useState('');
 	const [ open, setOpen ] = useState(false);
 	const [ selectedTemplate, setSelectedTemplate ] = useState(null);
@@ -83,6 +84,7 @@ const RichTextEditor = (props) => {
 	const handleClose = (value) => {
 		setOpen(false);
 		setSelectedTemplate(value);
+		setContent(value);
 	};
 
 	const handleTitleChange = (e) => {
@@ -118,6 +120,23 @@ const RichTextEditor = (props) => {
 			}
 		},
 		[ note ]
+	);
+
+	useEffect(
+		() => {
+			if (currentUser && note) {
+				const timer = setTimeout(() => {
+					if (latestContent !== content) {
+						dispatch(updateNote(currentUser.userId, notebooksId, noteId, noteTitle, content, token));
+						setLatestContent(content);
+						// console.log('this useEffect is hit');
+					}
+				}, 3000);
+				return () => clearTimeout(timer);
+			}
+		},
+		// eslint-disable-next-line
+		[ content ]
 	);
 
 	const classes = useStyles();
@@ -188,7 +207,7 @@ const RichTextEditor = (props) => {
 						<div className={classes.maxHeight}>
 							<ReactQuill
 								theme="snow"
-								value={selectedTemplate}
+								value={content}
 								onChange={handleQuillChange}
 								formats={formats}
 								modules={modules}
