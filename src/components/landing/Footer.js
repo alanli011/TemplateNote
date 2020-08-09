@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 
+// function to use the material ui styles for footer component
 const useStyles = makeStyles((theme) => ({
 	footer: {
 		padding: theme.spacing(3, 2),
