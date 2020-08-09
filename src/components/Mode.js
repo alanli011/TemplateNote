@@ -37,8 +37,10 @@ const Mode = (props) => {
 				)}
 			</ListItemIcon>
 			<ListItemText>
+				{/* if darkState is true, then show Toggle Light Mode text */}
 				<Typography variant="subtitle1">{darkState ? 'Toggle Light Mode' : 'Toggle Dark Mode'}</Typography>
 			</ListItemText>
+			{/* Switch component from material ui */}
 			<Switch checked={darkState} onChange={handleThemeChange} />
 		</React.Fragment>
 	);
