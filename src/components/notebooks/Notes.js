@@ -13,6 +13,7 @@ import SingleNoteBook from './SingleNotebook';
 const Notes = (props) => {
 	// const classes = useStyles();
 
+	// render the singlenotebook component and richtexteditor component. This was the only way to get RichTextEditor to not throw an error
 	return (
 		<React.Fragment>
 			<div>
