@@ -70,6 +70,7 @@ const RichTextEditor = (props) => {
 	const [ open, setOpen ] = useState(false);
 	const [ selectedTemplate, setSelectedTemplate ] = useState(null);
 
+	// function to delete a note
 	const deleteNoteHandler = () => {
 		if (token) {
 			dispatch(deleteNote(notebooksId, noteId, token));
@@ -77,32 +78,38 @@ const RichTextEditor = (props) => {
 		}
 	};
 
+	// function to handle the material ui modal
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
 
+	// function to handle the closing. once a template is selected, it will close the modal and set the appropriate state for each variable
 	const handleClose = (value) => {
 		setOpen(false);
 		setSelectedTemplate(value);
 		setContent(value);
 	};
 
+	// function to track the change in state of the input
 	const handleTitleChange = (e) => {
 		setNoteTitle(e.target.value);
 	};
 
+	// function to handle the change in the rich text editor if there is a note from the redux store
 	const handleQuillChange = (content, delta, source, editor) => {
 		if (note) {
 			setContent(content);
 		}
 	};
 
+	// function to manually handle the saving of a note. dispatch from store and update the current note
 	const saveNoteHandler = () => {
 		if (currentUser && note) {
 			dispatch(updateNote(currentUser.userId, notebooksId, noteId, noteTitle, content, token));
 		}
 	};
 
+	// this useEffect will pull from the redux store the user if the user is logged in.
 	useEffect(
 		() => {
 			if (currentUser) {
@@ -112,6 +119,7 @@ const RichTextEditor = (props) => {
 		[ currentUser, dispatch, noteId, notebooksId ]
 	);
 
+	// this useEffect will pull data from theh redux store that has the info regarding the selected note upon loading of the component.
 	useEffect(
 		() => {
 			if (note) {
@@ -122,6 +130,7 @@ const RichTextEditor = (props) => {
 		[ note ]
 	);
 
+	// this useEffect handles the auto saving of the rich text editor. it will compare the note every 3 seconds and if it's different then it will perform a put request and set the current state of the latest content.
 	useEffect(
 		() => {
 			if (currentUser && note) {
@@ -141,6 +150,7 @@ const RichTextEditor = (props) => {
 
 	const classes = useStyles();
 
+	// this variable handles the react quill toolbar customization
 	const modules = {
 		toolbar: [
 			[ { font: [] } ],
@@ -153,6 +163,7 @@ const RichTextEditor = (props) => {
 		]
 	};
 
+	// this variable handles the react quill toolbar customization for formatting the text.
 	const formats = [
 		'font',
 		'size',
@@ -174,6 +185,7 @@ const RichTextEditor = (props) => {
 
 	return (
 		<main className={classes.root}>
+			{/* if there is a note, then display this information */}
 			{note && (
 				<React.Fragment>
 					<div className={classes.note__header}>
@@ -203,6 +215,7 @@ const RichTextEditor = (props) => {
 							<DeleteForeverIcon onClick={deleteNoteHandler} className={classes.delete} />
 						</div>
 					</div>
+					{/* if the user selects the template, then display the html that comes from the templates */}
 					{selectedTemplate ? (
 						<div className={classes.maxHeight}>
 							<ReactQuill

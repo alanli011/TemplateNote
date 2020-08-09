@@ -66,9 +66,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function LandingPage(props) {
+	// destructuring functions from withhin auth0
 	const { isAuthenticated, loginWithRedirect } = useAuth0();
 	const classes = useStyles();
 
+	// if authenticated through auth0, then user cannot land on this landing page
 	if (isAuthenticated) {
 		props.history.push('/home');
 	}

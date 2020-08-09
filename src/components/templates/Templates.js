@@ -8,6 +8,7 @@ import { Typography, Container, Grid, Card, CardContent, Button } from '@materia
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
+// styles for Templates component
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
@@ -41,20 +42,24 @@ const Templates = (props) => {
 	const token = useSelector((state) => state.authentication.token);
 	const [ open, setOpen ] = useState(false);
 
+	// opens up a modal to create template
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
 
+	// handles the cancel/close of the modal
 	const handleClose = () => {
 		setOpen(false);
 	};
 
+	// handles the deleting of the template. dispatches to the redux store to handle
 	const handleDeleteTemplate = (id) => {
 		if (token) {
 			dispatch(deleteTemplate(id, token));
 		}
 	};
 
+	// useEffect will grab all the templates
 	useEffect(
 		() => {
 			if (currentUser) {
@@ -64,10 +69,12 @@ const Templates = (props) => {
 		[ currentUser, dispatch ]
 	);
 
+	// useEffect to handle the browser tab title
 	useEffect(() => {
 		document.title = 'TemplateNote - Templates';
 	}, []);
 
+	// do not render the toolbar for the displayed template(pulled from react quill js)
 	const modules = {
 		toolbar: false
 	};

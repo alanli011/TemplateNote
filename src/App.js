@@ -48,12 +48,15 @@ const App = () => {
 		[ user ]
 	);
 
+	// declaring variable to determine whether the application darkState is true or false
 	const paletteType = darkState ? 'dark' : 'light';
 
+	// setting the material ui colors depending on darkState
 	const mainPrimaryColor = darkState ? green[700] : lightBlue[500];
 	const mainSecondaryColor = darkState ? lightBlue[900] : green[900];
 	const successColor = darkState ? blueGrey[800] : amber[50];
 
+	// using material UI function to create my own theme color palette
 	let darkTheme = createMuiTheme({
 		palette: {
 			type: paletteType,
@@ -68,6 +71,8 @@ const App = () => {
 			}
 		}
 	});
+
+	// utilizing responsive font sizes from material ui for typography and applying to entire application
 	darkTheme = responsiveFontSizes(darkTheme);
 	// console.log(darkTheme);
 

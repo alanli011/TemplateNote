@@ -5,6 +5,7 @@ import noteImage from '../assets/lightbuild-unsplash.jpg';
 import { Typography, Container, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
+// styles for the home component
 const useStyles = makeStyles((theme) => ({
 	content: {
 		padding: theme.spacing(3),
@@ -33,6 +34,7 @@ const Home = (props) => {
 	// const { isAuthenticated } = useAuth0();
 	const classes = useStyles();
 
+	// render jsx for when users sucessfully login/signup
 	return (
 		<main className={classes.root}>
 			<Container maxWidth="lg" className={classes.content}>

@@ -29,11 +29,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TemplateButton = (props) => {
+	// destructure props that is threaded from the RichTextEditor component
 	const { onClose, open, selectedTemplate } = props;
 	const dispatch = useDispatch();
 	const templates = useSelector((state) => state.templates);
 	const currentUser = useSelector((state) => state.authentication.currentUser);
 
+	// this useEffect handles dispatching of templates from the redux store
 	useEffect(
 		() => {
 			if (currentUser) {

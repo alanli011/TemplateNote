@@ -8,8 +8,10 @@ import { List, ListItem, ListItemText, Typography, Divider } from '@material-ui/
 import { makeStyles } from '@material-ui/core/styles';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
+// setting the drawer width (navigation) to be 300px
 const drawerWidth = 300;
 
+// styles for Single Notebook component
 const useStyles = makeStyles((theme) => ({
 	root: {
 		display: 'flex',
@@ -46,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SingleNotebook = (props) => {
+	// use react router useParams method to grab notebooksId
 	const { notebooksId } = useParams();
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.authentication.currentUser);
@@ -53,11 +56,13 @@ const SingleNotebook = (props) => {
 	const notebookData = useSelector((state) => state.currentNotebook);
 	const notebook = useSelector((state) => state.notebook);
 
+	// setting default values for the title of the note and the rich text editor
 	let title = 'Untitled';
 	let content = '';
 
 	const classes = useStyles();
 
+	// if the currentUser is logged in, dispatch to redux store to get all the notebooks data and the notebook
 	useEffect(
 		() => {
 			if (currentUser) {
@@ -68,6 +73,8 @@ const SingleNotebook = (props) => {
 		// eslint-disable-next-line
 		[ currentUser, dispatch ]
 	);
+
+	// this useEffect will name the browser tab title
 	useEffect(
 		() => {
 			if (notebook) {
@@ -77,6 +84,8 @@ const SingleNotebook = (props) => {
 		[ notebook ]
 	);
 
+	// this function will handle the creating of the note
+	// when it's created, it will also move our "component" browser url see all the notes.
 	const handleCreateNote = () => {
 		if (currentUser) {
 			dispatch(createNote(notebooksId, title, content, token));
