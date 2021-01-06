@@ -12,7 +12,7 @@
 		"@testing-library/react": "^9.5.0",
 		"@testing-library/user-event": "^7.2.1",
 		"aws-amplify": "^3.0.18",
-		"axios": "^0.19.2",
+		"axios": "^0.21.1",
 		"babel-polyfill": "^6.26.0",
 		"clsx": "^1.1.1",
 		"prop-types": "^15.7.2",
